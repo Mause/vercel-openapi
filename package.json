@@ -19,7 +19,7 @@
     "@types/mocha": "^9",
     "@types/node": "^10",
     "chai": "^4",
-    "eslint": "^5.13",
+    "eslint": "^7.32",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.2",
     "mocha": "^5",
