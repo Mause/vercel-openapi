@@ -1,7 +1,4 @@
-vercel-openapi
-==============
-
-
+# vercel-openapi
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/vercel-openapi.svg)](https://npmjs.org/package/vercel-openapi)
@@ -9,11 +6,15 @@ vercel-openapi
 [![License](https://img.shields.io/npm/l/vercel-openapi.svg)](https://github.com/Mause/vercel-openapi/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
@@ -25,8 +26,11 @@ USAGE
   $ vercel-openapi COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
 
 <!-- commandsstop -->
