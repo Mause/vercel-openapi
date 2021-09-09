@@ -4,9 +4,7 @@ import { resolve } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 
-const dir = "api";
-
-async function generateOpenapi() {
+async function generateOpenapi(dir: string) {
   const filename = resolve(dir + "/openapi.yaml");
   console.log(filename);
   const doc = parseDocument((await readFile(filename)).toString());
@@ -110,7 +108,7 @@ class VercelOpenapi extends Command {
       this.log(`you input --force and --file: ${args.file}`);
     }
 
-    await generateOpenapi();
+    await generateOpenapi(args.file);
   }
 }
 
