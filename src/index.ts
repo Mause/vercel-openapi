@@ -14,8 +14,8 @@ async function generateOpenapi(dir: string) {
   for (const filename of await readdir(resolve(dir))) {
     const name = filename.substr(0, filename.lastIndexOf("."));
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
-      const path = join(dir, name);
-      const endpoint = require(path); // register models
+      const endpoint = require(join(dir, name)); // register models
+      const path = "/api/" + name;
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
       }

@@ -9,7 +9,7 @@ exports[`vercel-openapi runs hello 1`] = `
     \\"version\\": \\"0.0.1\\"
   },
   \\"paths\\": {
-    \\"/workspaces/vercel-openapi/test/fake/api/endpoint\\": {
+    \\"/api/endpoint\\": {
       \\"get\\": {
         \\"operationId\\": \\"getEndpoint\\",
         \\"responses\\": {
