@@ -98,7 +98,7 @@ class VercelOpenapi extends Command {
 
     const result = await generateOpenapi(args.file);
     if (flags.outputFile) {
-      await writeFile("openapi.yaml", result.toString());
+      await writeFile(flags.outputFile, result.toString());
     } else {
       this.log(JSON.stringify(result, undefined, 2));
     }
