@@ -4,7 +4,10 @@
     "importHelpers": true,
     "module": "commonjs",
     "outDir": "lib",
+    "esModuleInterop": true,
     "rootDir": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "target": "es2017"
   },

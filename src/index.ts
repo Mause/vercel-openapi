@@ -1,22 +1,21 @@
 import { Command, flags } from "@oclif/command";
 import { readFile, readdir, writeFile } from "fs/promises";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 
 async function generateOpenapi(dir: string) {
+  dir = resolve(join(dir, "api"));
   const filename = resolve(dir + "/openapi.yaml");
   console.log(filename);
   const doc = parseDocument((await readFile(filename)).toString());
-
-  process.env.JWT_SECRET = "SECRET"; // play pretend
 
   const paths = doc.get("paths") as YAMLMap<string, {}>;
   for (const filename of await readdir(resolve(dir))) {
     const name = filename.substr(0, filename.lastIndexOf("."));
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
-      const path = `/api/${name}`;
-      const endpoint = require("." + path); // register models
+      const path = join(dir, name);
+      const endpoint = require(path); // register models
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
       }
@@ -54,8 +53,6 @@ async function generateOpenapi(dir: string) {
   });
   doc.setIn(["components", "schemas"], doc.createNode(schemas));
 
-  console.log(JSON.stringify(doc, undefined, 2));
-
   for (const operation of (
     doc.get("paths") as YAMLMap<
       string,
@@ -81,7 +78,7 @@ async function generateOpenapi(dir: string) {
     }
   }
 
-  await writeFile("openapi.yaml", doc.toString());
+  return doc;
 }
 
 class VercelOpenapi extends Command {
@@ -91,24 +88,20 @@ class VercelOpenapi extends Command {
     // add --version flag to show CLI version
     version: flags.version({ char: "v" }),
     help: flags.help({ char: "h" }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: "n", description: "name to print" }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: "f" }),
+    outputFile: flags.string({ char: "o" }),
   };
 
-  static args = [{ name: "file" }];
+  static args = [{ name: "file", required: true }];
 
   async run() {
     const { args, flags } = this.parse(VercelOpenapi);
 
-    const name = flags.name ?? "world";
-    this.log(`hello ${name} from ./src/index.ts`);
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`);
+    const result = await generateOpenapi(args.file);
+    if (flags.outputFile) {
+      await writeFile("openapi.yaml", result.toString());
+    } else {
+      this.log(JSON.stringify(result, undefined, 2));
     }
-
-    await generateOpenapi(args.file);
   }
 }
 
