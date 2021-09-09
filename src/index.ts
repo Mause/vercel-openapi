@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { readFile, readdir, writeFile } from "fs/promises";
-import { resolve, join } from "path";
+import { resolve, join, parse } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 
@@ -12,7 +12,7 @@ async function generateOpenapi(dir: string) {
 
   const paths = doc.get("paths") as YAMLMap<string, {}>;
   for (const filename of await readdir(resolve(dir))) {
-    const name = filename.substr(0, filename.lastIndexOf("."));
+    const name = parse(filename).name;
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
       const endpoint = require(join(dir, name)); // register models
       const path = "/api/" + name;
