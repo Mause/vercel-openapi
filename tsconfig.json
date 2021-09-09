@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strict": true,
+    "composite": true,
     "target": "es2017"
   },
   "include": ["src/**/*"]

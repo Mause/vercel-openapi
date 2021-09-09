@@ -3,8 +3,12 @@ import { readFile, readdir, writeFile } from "fs/promises";
 import { resolve, join, parse } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
+import { register } from "ts-node";
 
 async function generateOpenapi(dir: string) {
+  // register .ts extensions
+  register({ cwd: dir });
+
   dir = resolve(join(dir, "api"));
   const filename = resolve(dir + "/openapi.yaml");
   const doc = parseDocument((await readFile(filename)).toString());
