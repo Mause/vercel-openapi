@@ -39,7 +39,8 @@ exports[`vercel-openapi runs hello 1`] = `
           \\"id\\"
         ]
       }
-    }
+    },
+    \\"securitySchemes\\": {}
   }
 }
 "
