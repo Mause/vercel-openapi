@@ -4,6 +4,7 @@ import { resolve, join, parse } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
+const { defaultMetadataStorage } = require('class-transformer/cjs/storage')
 
 async function generateOpenapi(dir: string) {
   // register .ts extensions
@@ -53,6 +54,7 @@ async function generateOpenapi(dir: string) {
 
   const schemas = validationMetadatasToSchemas({
     refPointerPrefix: "#/components/schemas/",
+    classTransformerMetadataStorage: defaultMetadataStorage,
   });
   doc.setIn(["components", "schemas"], doc.createNode(schemas));
 
