@@ -7,7 +7,6 @@ import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 async function generateOpenapi(dir: string) {
   dir = resolve(join(dir, "api"));
   const filename = resolve(dir + "/openapi.yaml");
-  console.log(filename);
   const doc = parseDocument((await readFile(filename)).toString());
 
   const paths = doc.get("paths") as YAMLMap<string, {}>;
