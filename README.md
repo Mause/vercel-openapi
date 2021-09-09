@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/npm/v/vercel-openapi.svg)](https://npmjs.org/package/vercel-openapi)
 [![Downloads/week](https://img.shields.io/npm/dw/vercel-openapi.svg)](https://npmjs.org/package/vercel-openapi)
 [![License](https://img.shields.io/npm/l/vercel-openapi.svg)](https://github.com/Mause/vercel-openapi/blob/master/package.json)
+[![NPM](https://nodei.co/npm/vercel-openapi.png)](https://nodei.co/npm/vercel-openapi/)
 
 <!-- toc -->
 
