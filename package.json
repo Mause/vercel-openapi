@@ -1,6 +1,6 @@
 {
   "name": "vercel-openapi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Elliana May @Mause",
   "bin": {
     "vercel-openapi": "./bin/run"
