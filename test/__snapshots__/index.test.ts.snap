@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`vercel-openapi runs hello 1`] = `
-"/workspaces/vercel-openapi/test/fake/api/openapi.yaml
-{
+"{
   \\"openapi\\": \\"3.1.0\\",
   \\"info\\": {
     \\"title\\": \\"FakeAPI\\",
