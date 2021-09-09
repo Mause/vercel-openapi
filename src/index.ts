@@ -4,7 +4,7 @@ import { resolve, join, parse } from "path";
 import { parseDocument, YAMLMap } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
-const { defaultMetadataStorage } = require('class-transformer/cjs/storage')
+const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 async function generateOpenapi(dir: string) {
   // register .ts extensions
