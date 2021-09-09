@@ -109,7 +109,7 @@ class VercelOpenapi extends Command {
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`);
     }
-    
+
     await generateOpenApi();
   }
 }
