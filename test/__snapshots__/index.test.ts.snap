@@ -38,10 +38,31 @@ exports[`vercel-openapi runs hello 1`] = `
           }
         }
       }
+    },
+    \\"/api/dynamic/{dynamic_segment}\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"getDynamic\\",
+        \\"responses\\": {
+          \\"default\\": {
+            \\"$ref\\": \\"#/components/schemas/GetRequest\\"
+          }
+        }
+      }
     }
   },
   \\"components\\": {
     \\"schemas\\": {
+      \\"GetRequest\\": {
+        \\"properties\\": {
+          \\"name\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        \\"type\\": \\"object\\",
+        \\"required\\": [
+          \\"name\\"
+        ]
+      },
       \\"PostRequest\\": {
         \\"properties\\": {
           \\"name\\": {

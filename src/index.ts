@@ -27,14 +27,31 @@ async function generateOpenapi(dir: string) {
   const doc = await loadTemplate(dir);
 
   for (const filename of await readdir(resolve(dir))) {
-    const name = parse(filename).name;
+    let name = parse(filename).name;
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
       const endpoint = require(join(dir, name)) as Endpoint; // register models
-      const path = "/api/" + name;
       if (!endpoint.responseShape) {
-        throw new Error(`Missing responseShape for ${path}`);
+        throw new Error(`Missing responseShape for ${name}`);
       }
-      doc.addPath(path, generatePath(name, endpoint));
+      const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
+      if (isDynamic) {
+        name = name.substr(1, name.length - 2);
+      }
+
+      const opea = generatePath(name, endpoint);
+      if (isDynamic) {
+        opea.parameters?.push({
+          name: "dynamic_segment",
+          in: "path",
+          schema: {
+            type: "string",
+          },
+        });
+      }
+
+      let path = "/api/" + name;
+      if (isDynamic) path += "/{dynamic_segment}";
+      doc.addPath(path, opea);
     }
   }
 
