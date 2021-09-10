@@ -4,7 +4,12 @@ import { resolve, join, parse } from "path";
 import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
-import { OpenApiBuilder, PathItemObject, OpenAPIObject } from "openapi3-ts";
+import {
+  OpenApiBuilder,
+  PathItemObject,
+  OpenAPIObject,
+  OperationObject,
+} from "openapi3-ts";
 import { validateDoc } from "./validation";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
@@ -48,7 +53,9 @@ async function generateOpenapi(dir: string) {
 }
 
 function generatePath(name: string, endpoint: Endpoint): PathItemObject {
-  const methods = endpoint.methods || new Set("get");
+  const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
+    str.toLowerCase()
+  );
   const recased = name[0].toUpperCase() + name.substring(1);
 
   const def: PathItemObject = {};
