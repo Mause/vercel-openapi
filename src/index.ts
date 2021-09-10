@@ -13,6 +13,12 @@ import {
 } from "openapi3-ts";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
+interface Endpoint {
+  responseShape?: string;
+  requestShape?: string;
+  methods?: Set<keyof Pick<PathItemObject, "get">>;
+}
+
 async function generateOpenapi(dir: string) {
   // register .ts extensions
   register({ cwd: dir });
@@ -23,7 +29,7 @@ async function generateOpenapi(dir: string) {
   for (const filename of await readdir(resolve(dir))) {
     const name = parse(filename).name;
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
-      const endpoint = require(join(dir, name)); // register models
+      const endpoint = require(join(dir, name)) as Endpoint; // register models
       const path = "/api/" + name;
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
