@@ -7,11 +7,17 @@ import { register } from "ts-node";
 import {
   OpenApiBuilder,
   PathItemObject,
-  OperationObject,
-  SchemaObject,
   OpenAPIObject,
+  OperationObject,
 } from "openapi3-ts";
+import { validateDoc } from "./validation";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
+
+interface Endpoint {
+  responseShape?: string;
+  requestShape?: string;
+  methods?: Set<keyof Pick<PathItemObject, "get">>;
+}
 
 async function generateOpenapi(dir: string) {
   // register .ts extensions
@@ -23,28 +29,12 @@ async function generateOpenapi(dir: string) {
   for (const filename of await readdir(resolve(dir))) {
     const name = parse(filename).name;
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
-      const endpoint = require(join(dir, name)); // register models
+      const endpoint = require(join(dir, name)) as Endpoint; // register models
       const path = "/api/" + name;
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
       }
-      doc.addPath(path, {
-        get: {
-          operationId: "get" + name[0].toUpperCase() + name.substring(1),
-          responses: {
-            default: {
-              description: "Ok",
-              content: {
-                "application/json": {
-                  schema: {
-                    $ref: "#/components/schemas/" + endpoint.responseShape,
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
+      doc.addPath(path, generatePath(name, endpoint));
     }
   }
 
@@ -57,23 +47,39 @@ async function generateOpenapi(dir: string) {
     doc.addSchema(name, schema);
   }
 
-  const result = doc.getSpec();
+  validateDoc(doc);
 
-  for (const operation of Object.values<PathItemObject>(result.paths)) {
-    for (const verb of Object.values(operation)) {
-      if (!isOperationObject(verb)) continue;
-      let ref = (verb!.responses.default! as SchemaObject).content![
-        "application/json"
-      ].schema.$ref;
-      const parts = ref.split("/");
-      ref = parts[parts.length - 1];
-      if (!result.components!.schemas![ref]) {
-        throw new Error(`Couldn't find ${ref}`);
+  return doc.rootDoc;
+}
+
+function generatePath(name: string, endpoint: Endpoint): PathItemObject {
+  const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
+    str.toLowerCase()
+  );
+  const recased = name[0].toUpperCase() + name.substring(1);
+
+  const def: PathItemObject = {};
+
+  for (const method of methods) {
+    const op: OperationObject = (def[method] = {
+      operationId: method + recased,
+      responses: {
+        default: {
+          $ref: "#/components/schemas/" + endpoint.responseShape,
+        },
+      },
+    });
+    if (method !== "get" && method !== "delete") {
+      if (!endpoint.requestShape?.length) {
+        throw new Error(`Missing requestShape for ${name} for ${method}`);
       }
+      op.requestBody = {
+        $ref: "#/components/schemas/" + endpoint.requestShape,
+      };
     }
   }
 
-  return doc.rootDoc;
+  return def;
 }
 
 async function loadTemplate(dir: string) {
@@ -88,10 +94,6 @@ async function loadTemplate(dir: string) {
   };
 
   return OpenApiBuilder.create(baseDoc);
-}
-
-function isOperationObject(t: any): t is OperationObject {
-  return t.operationId;
 }
 
 class VercelOpenapi extends Command {
