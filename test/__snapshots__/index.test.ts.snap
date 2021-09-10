@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`vercel-openapi (debug) runs hello 1`] = `""`;
+
 exports[`vercel-openapi runs 1`] = `
 "{
   \\"openapi\\": \\"3.1.0\\",
@@ -90,9 +92,10 @@ exports[`vercel-openapi runs help 1`] = `
 "describe the command here
 
 USAGE
-  $ vercel-openapi FILE
+  $ vercel-openapi DIRECTORY
 
 OPTIONS
+  -d, --debug
   -h, --help                   show CLI help
   -o, --outputFile=outputFile
   -v, --version                show CLI version
