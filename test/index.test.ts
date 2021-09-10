@@ -17,9 +17,9 @@ describe("vercel-openapi", () => {
 
 describe("vercel-openapi (debug)", () => {
   test
-    .stdout()
+    .stderr()
     .do(() => cmd.run(["test/fake", "--debug"]))
     .it("runs hello", (ctx) => {
-      expect(ctx.stdout).toMatchSnapshot();
+      expect(ctx.stderr).toMatchSnapshot();
     });
 });
