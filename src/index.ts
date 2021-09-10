@@ -54,16 +54,19 @@ function generatePath(name: string, endpoint: Endpoint): PathItemObject {
   const def: PathItemObject = {};
 
   for (const method of methods) {
-    def[method] = {
+    const op: OperationObject = (def[method] = {
       operationId: method + recased,
       responses: {
         default: {
           $ref: "#/components/schemas/" + endpoint.responseShape,
         },
       },
-    };
-    if (method !== ("get" as string) || method !== ("delete" as string)) {
-      def[method].requestBody = {
+    });
+    if (method !== "get" && method !== "delete") {
+      if (!endpoint.requestShape?.length) {
+        throw new Error(`Missing requestShape for ${name} for ${method}`);
+      }
+      op.requestBody = {
         $ref: "#/components/schemas/" + endpoint.requestShape,
       };
     }
