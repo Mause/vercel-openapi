@@ -10,6 +10,16 @@ exports[`vercel-openapi runs 1`] = `
     \\"version\\": \\"0.0.1\\"
   },
   \\"paths\\": {
+    \\"/api/dynamic/{dynamic_segment}\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"getDynamic\\",
+        \\"responses\\": {
+          \\"default\\": {
+            \\"$ref\\": \\"#/components/schemas/GetRequest\\"
+          }
+        }
+      }
+    },
     \\"/api/create\\": {
       \\"post\\": {
         \\"operationId\\": \\"postCreate\\",
@@ -37,16 +47,6 @@ exports[`vercel-openapi runs 1`] = `
         \\"responses\\": {
           \\"default\\": {
             \\"$ref\\": \\"#/components/schemas/Shape\\"
-          }
-        }
-      }
-    },
-    \\"/api/dynamic/{dynamic_segment}\\": {
-      \\"get\\": {
-        \\"operationId\\": \\"getDynamic\\",
-        \\"responses\\": {
-          \\"default\\": {
-            \\"$ref\\": \\"#/components/schemas/GetRequest\\"
           }
         }
       }
