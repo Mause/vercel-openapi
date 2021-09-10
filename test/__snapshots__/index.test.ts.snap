@@ -9,6 +9,17 @@ exports[`vercel-openapi runs hello 1`] = `
   },
   \\"paths\\": {
     \\"/api/create\\": {
+      \\"post\\": {
+        \\"operationId\\": \\"postCreate\\",
+        \\"responses\\": {
+          \\"default\\": {
+            \\"$ref\\": \\"#/components/schemas/PostRequest\\"
+          }
+        },
+        \\"requestBody\\": {
+          \\"$ref\\": \\"#/components/schemas/PostRequest\\"
+        }
+      },
       \\"get\\": {
         \\"operationId\\": \\"getCreate\\",
         \\"responses\\": {
