@@ -1,5 +1,5 @@
 import { IsString } from "class-validator";
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import { VercelRequest, VercelResponse } from "@vercel/node";
 
 export const methods = new Set(["POST", "GET"]);
 
