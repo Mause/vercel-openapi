@@ -28,30 +28,8 @@ async function generateOpenapi(dir: string) {
 
   for (const filename of await readdir(resolve(dir))) {
     let name = parse(filename).name;
-    if (name != "openapi.yaml" && filename.endsWith(".ts")) {
-      const endpoint = require(join(dir, name)) as Endpoint; // register models
-      if (!endpoint.responseShape) {
-        throw new Error(`Missing responseShape for ${name}`);
-      }
-      const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
-      if (isDynamic) {
-        name = name.substr(1, name.length - 2);
-      }
-
-      const opea = generatePath(name, endpoint);
-      if (isDynamic) {
-        opea.parameters?.push({
-          name: "dynamic_segment",
-          in: "path",
-          schema: {
-            type: "string",
-          },
-        });
-      }
-
-      let path = "/api/" + name;
-      if (isDynamic) path += "/{dynamic_segment}";
-      doc.addPath(path, opea);
+    if (filename.endsWith(".ts")) {
+      doc.addPath(...generatePath(doc, name, dir));
     }
   }
 
@@ -69,7 +47,43 @@ async function generateOpenapi(dir: string) {
   return doc.rootDoc;
 }
 
-function generatePath(name: string, endpoint: Endpoint): PathItemObject {
+function generatePath(
+  doc: OpenApiBuilder,
+  name: string,
+  dir: string
+): [string, PathItemObject] {
+  const endpoint = require(join(dir, name)) as Endpoint; // register models
+  if (!endpoint.responseShape) {
+    throw new Error(`Missing responseShape for ${name}`);
+  }
+  const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
+  if (isDynamic) {
+    name = name.substr(1, name.length - 2);
+  }
+
+  const opea = generatePathItemObject(name, endpoint);
+  if (isDynamic) {
+    opea.parameters?.push({
+      name: "dynamic_segment",
+      in: "path",
+      schema: {
+        type: "string",
+      },
+    });
+  }
+
+  let path = "/api/" + name;
+  if (isDynamic) {
+    path += "/{dynamic_segment}";
+  }
+
+  return [path, opea];
+}
+
+function generatePathItemObject(
+  name: string,
+  endpoint: Endpoint
+): PathItemObject {
   const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
     str.toLowerCase()
   );
