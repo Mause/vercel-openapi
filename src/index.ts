@@ -1,9 +1,16 @@
 import { Command, flags } from "@oclif/command";
-import { readFile, readdir, writeFile } from "fs/promises";
+import { readdir, readFile, writeFile } from "fs/promises";
 import { resolve, join, parse } from "path";
-import { parseDocument, YAMLMap } from "yaml";
+import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
+import {
+  OpenApiBuilder,
+  PathItemObject,
+  OperationObject,
+  SchemaObject,
+  OpenAPIObject,
+} from "openapi3-ts";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 async function generateOpenapi(dir: string) {
@@ -11,10 +18,8 @@ async function generateOpenapi(dir: string) {
   register({ cwd: dir });
 
   dir = resolve(join(dir, "api"));
-  const filename = resolve(dir + "/openapi.yaml");
-  const doc = parseDocument((await readFile(filename)).toString());
+  const doc = await loadTemplate(dir);
 
-  const paths = doc.get("paths") as YAMLMap<string, {}>;
   for (const filename of await readdir(resolve(dir))) {
     const name = parse(filename).name;
     if (name != "openapi.yaml" && filename.endsWith(".ts")) {
@@ -23,18 +28,10 @@ async function generateOpenapi(dir: string) {
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
       }
-      let value = paths.get(path) as YAMLMap<string, {}>;
-      if (!value) {
-        value = new YAMLMap();
-        const get = new YAMLMap();
-        value.set("get", get);
-        get.set(
-          "operationId",
-          "get" + name[0].toUpperCase() + name.substring(1)
-        );
-        get.set(
-          "responses",
-          doc.createNode({
+      doc.addPath(path, {
+        get: {
+          operationId: "get" + name[0].toUpperCase() + name.substring(1),
+          responses: {
             default: {
               description: "Ok",
               content: {
@@ -45,45 +42,56 @@ async function generateOpenapi(dir: string) {
                 },
               },
             },
-          })
-        );
-      }
-      paths.set(path, value);
+          },
+        },
+      });
     }
   }
 
-  const schemas = validationMetadatasToSchemas({
-    refPointerPrefix: "#/components/schemas/",
-    classTransformerMetadataStorage: defaultMetadataStorage,
-  });
-  doc.setIn(["components", "schemas"], doc.createNode(schemas));
+  for (const [name, schema] of Object.entries(
+    validationMetadatasToSchemas({
+      refPointerPrefix: "#/components/schemas/",
+      classTransformerMetadataStorage: defaultMetadataStorage,
+    })
+  )) {
+    doc.addSchema(name, schema);
+  }
 
-  for (const operation of (
-    doc.get("paths") as YAMLMap<
-      string,
-      YAMLMap<string, YAMLMap<string, string>>
-    >
-  ).items) {
-    if (operation.value) {
-      for (const verb of operation.value.items) {
-        let ref = verb!.value!.getIn([
-          "responses",
-          "default",
-          "content",
-          "application/json",
-          "schema",
-          "$ref",
-        ]) as string;
-        const parts = ref.split("/");
-        ref = parts[parts.length - 1];
-        if (!schemas[ref]) {
-          throw new Error(`Couldn't find ${ref}`);
-        }
+  const result = doc.getSpec();
+
+  for (const operation of Object.values<PathItemObject>(result.paths)) {
+    for (const verb of Object.values(operation)) {
+      if (!isOperationObject(verb)) continue;
+      let ref = (verb!.responses.default! as SchemaObject).content![
+        "application/json"
+      ].schema.$ref;
+      const parts = ref.split("/");
+      ref = parts[parts.length - 1];
+      if (!result.components!.schemas![ref]) {
+        throw new Error(`Couldn't find ${ref}`);
       }
     }
   }
 
-  return doc;
+  return doc.rootDoc;
+}
+
+async function loadTemplate(dir: string) {
+  const filename = resolve(dir + "/openapi.yaml");
+
+  let baseDoc = parseDocument(
+    (await readFile(filename)).toString()
+  ).toJSON() as OpenAPIObject;
+  baseDoc.components = {
+    schemas: {},
+    securitySchemes: {},
+  };
+
+  return OpenApiBuilder.create(baseDoc);
+}
+
+function isOperationObject(t: any): t is OperationObject {
+  return t.operationId;
 }
 
 class VercelOpenapi extends Command {
