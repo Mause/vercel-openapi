@@ -14,3 +14,12 @@ describe("vercel-openapi", () => {
       expect(ctx.stdout).toMatchSnapshot();
     });
 });
+
+describe("vercel-openapi (debug)", () => {
+  test
+    .stdout()
+    .do(() => cmd.run(["test/fake", "--debug"]))
+    .it("runs hello", (ctx) => {
+      expect(ctx.stdout).toMatchSnapshot();
+    });
+});
