@@ -4,7 +4,8 @@ import { resolve, join, parse } from "path";
 import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
-import { OpenApiBuilder, PathItemObject, OpenAPIObject, SchemaObject, OperationObject } from "openapi3-ts";
+import { OpenApiBuilder, PathItemObject, OpenAPIObject } from "openapi3-ts";
+import { validateDoc } from "./validation";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 interface Endpoint {
@@ -41,21 +42,7 @@ async function generateOpenapi(dir: string) {
     doc.addSchema(name, schema);
   }
 
-  const result = doc.getSpec();
-
-  for (const operation of Object.values<PathItemObject>(result.paths)) {
-    for (const verb of Object.values(operation)) {
-      if (!isOperationObject(verb)) continue;
-      let ref = (verb!.responses.default! as SchemaObject).content![
-        "application/json"
-      ].schema.$ref;
-      const parts = ref.split("/");
-      ref = parts[parts.length - 1];
-      if (!result.components!.schemas![ref]) {
-        throw new Error(`Couldn't find ${ref}`);
-      }
-    }
-  }
+  validateDoc(doc);
 
   return doc.rootDoc;
 }
@@ -97,10 +84,6 @@ async function loadTemplate(dir: string) {
   };
 
   return OpenApiBuilder.create(baseDoc);
-}
-
-function isOperationObject(t: any): t is OperationObject {
-  return t.operationId;
 }
 
 class VercelOpenapi extends Command {
