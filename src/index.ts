@@ -11,7 +11,10 @@ import {
   OperationObject,
 } from "openapi3-ts";
 import { validateDoc } from "./validation";
+import pino from "pino";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
+
+const log = pino({ prettyPrint: true });
 
 interface Endpoint {
   responseShape?: string;
@@ -27,6 +30,7 @@ async function generateOpenapi(dir: string) {
   const doc = await loadTemplate(dir);
 
   for (const filename of await readdir(resolve(dir))) {
+    log.debug({ filename }, "Loading file");
     let name = parse(filename).name;
     if (filename.endsWith(".ts")) {
       doc.addPath(...generatePath(doc, name, dir));
@@ -39,10 +43,12 @@ async function generateOpenapi(dir: string) {
       classTransformerMetadataStorage: defaultMetadataStorage,
     })
   )) {
+    log.debug({ schemaName: name }, "Adding schema");
     doc.addSchema(name, schema);
   }
 
   validateDoc(doc);
+  log.debug({}, "Validation successful");
 
   return doc.rootDoc;
 }
@@ -133,16 +139,19 @@ class VercelOpenapi extends Command {
   static flags = {
     // add --version flag to show CLI version
     version: flags.version({ char: "v" }),
+    debug: flags.boolean({ char: "d" }),
     help: flags.help({ char: "h" }),
     outputFile: flags.string({ char: "o" }),
   };
 
-  static args = [{ name: "file", required: true }];
+  static args = [{ name: "directory", required: true }];
 
   async run() {
     const { args, flags } = this.parse(VercelOpenapi);
 
-    const result = await generateOpenapi(args.file);
+    log.level = flags.debug ? "debug" : "info";
+
+    const result = await generateOpenapi(args.directory);
     if (flags.outputFile) {
       await writeFile(flags.outputFile, result.toString());
     } else {
