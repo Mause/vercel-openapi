@@ -8,19 +8,22 @@ exports[`vercel-openapi runs hello 1`] = `
     \\"version\\": \\"0.0.1\\"
   },
   \\"paths\\": {
+    \\"/api/create\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"getCreate\\",
+        \\"responses\\": {
+          \\"default\\": {
+            \\"$ref\\": \\"#/components/schemas/PostRequest\\"
+          }
+        }
+      }
+    },
     \\"/api/endpoint\\": {
       \\"get\\": {
         \\"operationId\\": \\"getEndpoint\\",
         \\"responses\\": {
           \\"default\\": {
-            \\"description\\": \\"Ok\\",
-            \\"content\\": {
-              \\"application/json\\": {
-                \\"schema\\": {
-                  \\"$ref\\": \\"#/components/schemas/Shape\\"
-                }
-              }
-            }
+            \\"$ref\\": \\"#/components/schemas/Shape\\"
           }
         }
       }
@@ -28,6 +31,32 @@ exports[`vercel-openapi runs hello 1`] = `
   },
   \\"components\\": {
     \\"schemas\\": {
+      \\"PostRequest\\": {
+        \\"properties\\": {
+          \\"name\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        \\"type\\": \\"object\\",
+        \\"required\\": [
+          \\"name\\"
+        ]
+      },
+      \\"PostResponse\\": {
+        \\"properties\\": {
+          \\"id\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"name\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        \\"type\\": \\"object\\",
+        \\"required\\": [
+          \\"id\\",
+          \\"name\\"
+        ]
+      },
       \\"Shape\\": {
         \\"properties\\": {
           \\"id\\": {

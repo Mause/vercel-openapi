@@ -4,13 +4,7 @@ import { resolve, join, parse } from "path";
 import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
-import {
-  OpenApiBuilder,
-  PathItemObject,
-  OperationObject,
-  SchemaObject,
-  OpenAPIObject,
-} from "openapi3-ts";
+import { OpenApiBuilder, PathItemObject, OpenAPIObject, SchemaObject, OperationObject } from "openapi3-ts";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 interface Endpoint {
@@ -34,23 +28,7 @@ async function generateOpenapi(dir: string) {
       if (!endpoint.responseShape) {
         throw new Error(`Missing responseShape for ${path}`);
       }
-      doc.addPath(path, {
-        get: {
-          operationId: "get" + name[0].toUpperCase() + name.substring(1),
-          responses: {
-            default: {
-              description: "Ok",
-              content: {
-                "application/json": {
-                  schema: {
-                    $ref: "#/components/schemas/" + endpoint.responseShape,
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
+      doc.addPath(path, generatePath(name, endpoint));
     }
   }
 
@@ -80,6 +58,31 @@ async function generateOpenapi(dir: string) {
   }
 
   return doc.rootDoc;
+}
+
+function generatePath(name: string, endpoint: Endpoint): PathItemObject {
+  const methods = endpoint.methods || new Set("get");
+  const recased = name[0].toUpperCase() + name.substring(1);
+
+  const def: PathItemObject = {};
+
+  for (const method of methods) {
+    def[method] = {
+      operationId: method + recased,
+      responses: {
+        default: {
+          $ref: "#/components/schemas/" + endpoint.responseShape,
+        },
+      },
+    };
+    if (method !== ("get" as string) || method !== ("delete" as string)) {
+      def[method].requestBody = {
+        $ref: "#/components/schemas/" + endpoint.requestShape,
+      };
+    }
+  }
+
+  return def;
 }
 
 async function loadTemplate(dir: string) {
