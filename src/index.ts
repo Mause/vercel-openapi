@@ -11,6 +11,7 @@ import {
   SchemaObject,
   OpenAPIObject,
 } from "openapi3-ts";
+const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 async function generateOpenapi(dir: string) {
   // register .ts extensions
@@ -50,6 +51,7 @@ async function generateOpenapi(dir: string) {
   for (const [name, schema] of Object.entries(
     validationMetadatasToSchemas({
       refPointerPrefix: "#/components/schemas/",
+      classTransformerMetadataStorage: defaultMetadataStorage,
     })
   )) {
     doc.addSchema(name, schema);
