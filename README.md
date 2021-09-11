@@ -8,6 +8,7 @@
 
 <!-- toc -->
 
+- [vercel-openapi](#vercel-openapi)
 - [Usage](#usage)
 - [Commands](#commands)
 <!-- tocstop -->
@@ -21,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.0.0 linux-x64 node-v14.17.6
+vercel-openapi/0.0.8 win32-x64 node-v14.17.4
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
