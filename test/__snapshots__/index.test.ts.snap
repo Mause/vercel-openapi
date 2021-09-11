@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`vercel-openapi (debug) runs hello 1`] = `""`;
+exports[`vercel-openapi runs --debug 1`] = `""`;
 
 exports[`vercel-openapi runs 1`] = `
 "{

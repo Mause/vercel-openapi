@@ -21,13 +21,11 @@ describe("vercel-openapi", () => {
     .it("runs", (ctx) => {
       expect(ctx.stdout).toMatchSnapshot();
     });
-});
 
-describe("vercel-openapi (debug)", () => {
   test
     .stderr()
     .do(() => cmd.run(["test/fake", "--debug"]))
-    .it("runs hello", (ctx) => {
+    .it("runs --debug", (ctx) => {
       expect(ctx.stderr).toMatchSnapshot();
     });
 });
