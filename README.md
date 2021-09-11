@@ -35,24 +35,41 @@ USAGE
 
 <!-- commands -->
 
-- [`vercel-openapi DIRECTORY`](#vercel-openapi-directory)
+- [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
+- [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
 
-## `vercel-openapi DIRECTORY`
+## `vercel-openapi generate DIRECTORY`
 
 Generates openapi.yaml for vercel serverless functions
 
 ```
 USAGE
-  $ vercel-openapi DIRECTORY
+  $ vercel-openapi generate DIRECTORY
 
 OPTIONS
   -d, --debug
   -h, --help                   show CLI help
   -o, --outputFile=outputFile
-  -v, --version                show CLI version
 
 EXAMPLE
   $ vercel-openapi . --output public/openapi.yaml
+```
+
+## `vercel-openapi scaffold`
+
+Generates a scaffolded openapi.yaml
+
+```
+USAGE
+  $ vercel-openapi scaffold
+
+OPTIONS
+  -o, --outputFile=outputFile
+  -t, --title=title            (required)
+  -v, --version=version        (required)
+
+EXAMPLE
+  $ vercel-openapi scaffold --title FakeAPI --version 1.0.42
 ```
 
 <!-- commandsstop -->
