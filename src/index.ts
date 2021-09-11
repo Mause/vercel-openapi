@@ -24,7 +24,7 @@ interface Endpoint {
 
 async function generateOpenapi(dir: string) {
   // register .ts extensions
-  register({ cwd: dir });
+  register({ cwd: dir, moduleTypes: { "*.ts": "cjs" } });
 
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(dir);
