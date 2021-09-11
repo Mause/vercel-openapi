@@ -34,7 +34,8 @@
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.2",
     "mocha": "^9",
-    "mocha-chai-jest-snapshot": "^1.1.3"
+    "mocha-chai-jest-snapshot": "^1.1.3",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -60,7 +61,7 @@
   "scripts": {
     "build": "tsc --noemit",
     "posttest": "echo 0 || eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "prepack": "rimraf lib && tsc -b && oclif-dev readme",
     "test": "mocha -r ts-node/register 'test/**/*.ts'",
     "version": "oclif-dev readme && git add README.md"
   },
