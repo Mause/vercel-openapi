@@ -29,7 +29,7 @@ async function generateOpenapi(dir: string) {
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(dir);
 
-  for (const filename of await readdir(resolve(dir))) {
+  for (const filename of (await readdir(resolve(dir))).sort()) {
     log.debug({ filename }, "Loading file");
     let name = parse(filename).name;
     if (filename.endsWith(".ts")) {
