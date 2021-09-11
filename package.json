@@ -45,7 +45,9 @@
   ],
   "homepage": "https://github.com/Mause/vercel-openapi",
   "keywords": [
-    "oclif"
+    "oclif",
+    "vercel",
+    "openapi"
   ],
   "license": "MIT",
   "main": "lib/index.js",

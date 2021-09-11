@@ -35,4 +35,24 @@ USAGE
 
 <!-- commands -->
 
+- [`vercel-openapi DIRECTORY`](#vercel-openapi-directory)
+
+## `vercel-openapi DIRECTORY`
+
+Generates openapi.yaml for vercel serverless functions
+
+```
+USAGE
+  $ vercel-openapi DIRECTORY
+
+OPTIONS
+  -d, --debug
+  -h, --help                   show CLI help
+  -o, --outputFile=outputFile
+  -v, --version                show CLI version
+
+EXAMPLE
+  $ vercel-openapi . --output public/openapi.yaml
+```
+
 <!-- commandsstop -->
