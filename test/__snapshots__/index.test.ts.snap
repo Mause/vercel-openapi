@@ -70,18 +70,3 @@ components:
 
 "
 `;
-
-exports[`vercel-openapi runs help 1`] = `
-"describe the command here
-
-USAGE
-  $ vercel-openapi DIRECTORY
-
-OPTIONS
-  -d, --debug
-  -h, --help                   show CLI help
-  -o, --outputFile=outputFile
-  -v, --version                show CLI version
-
-"
-`;
