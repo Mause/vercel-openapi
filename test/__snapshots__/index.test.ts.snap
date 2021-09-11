@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`scaffold runs scaffold 1`] = `
+"openapi: 3.0.0
+info:
+  title: FakeAPI
+  version: 1.0.42
+paths: {}
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes: {}
+  links: {}
+  callbacks: {}
+tags: []
+servers: []
+
+"
+`;
+
 exports[`vercel-openapi runs --debug 1`] = `""`;
 
 exports[`vercel-openapi runs 1`] = `
