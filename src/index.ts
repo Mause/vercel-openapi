@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { readdir, readFile, writeFile } from "fs/promises";
 import { resolve, join, parse } from "path";
-import { parseDocument } from "yaml";
+import { parseDocument, stringify } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
 import {
@@ -152,10 +152,11 @@ class VercelOpenapi extends Command {
     log.level = flags.debug ? "debug" : "info";
 
     const result = await generateOpenapi(args.directory);
+    const output = stringify(result, undefined, 2);
     if (flags.outputFile) {
-      await writeFile(flags.outputFile, result.toString());
+      await writeFile(flags.outputFile, output);
     } else {
-      this.log(JSON.stringify(result, undefined, 2));
+      this.log(output);
     }
   }
 }
