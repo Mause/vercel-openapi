@@ -50,7 +50,9 @@
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
-    "bin": "vercel-openapi"
+    "bin": "vercel-openapi",
+    "repositoryPrefix": "https://github.com/Mause/vercel-openapi",
+    "commands": "src/commands"
   },
   "repository": "Mause/vercel-openapi",
   "scripts": {

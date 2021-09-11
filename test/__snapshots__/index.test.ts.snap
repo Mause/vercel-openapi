@@ -72,16 +72,14 @@ components:
 `;
 
 exports[`vercel-openapi runs help 1`] = `
-"describe the command here
+"VERSION
+  vercel-openapi/0.0.8 win32-x64 node-v14.17.4
 
 USAGE
-  $ vercel-openapi DIRECTORY
+  $ vercel-openapi [COMMAND]
 
-OPTIONS
-  -d, --debug
-  -h, --help                   show CLI help
-  -o, --outputFile=outputFile
-  -v, --version                show CLI version
+COMMANDS
+  generate  Generates openapi.yaml for vercel serverless functions
 
 "
 `;
