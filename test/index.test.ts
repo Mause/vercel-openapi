@@ -21,3 +21,14 @@ describe("vercel-openapi", () => {
       expect(ctx.stderr).toMatchSnapshot();
     });
 });
+
+describe("scaffold", () => {
+  test
+    .stdout()
+    .do(() =>
+      cmd.run(["scaffold", "--title", "FakeAPI", "--version", "1.0.42"])
+    )
+    .it("runs scaffold", (ctx) => {
+      expect(ctx.stdout).toMatchSnapshot();
+    });
+});
