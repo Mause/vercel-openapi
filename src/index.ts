@@ -1,4 +1,6 @@
 import { writeFile } from "fs/promises";
+import "./commands/generate";
+import "./commands/scaffold";
 import { OpenAPIObject } from "openapi3-ts";
 import { stringify } from "yaml";
 
