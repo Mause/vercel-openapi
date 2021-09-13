@@ -13,6 +13,7 @@ import {
 import { validateDoc } from "../validation";
 import pino from "pino";
 import { writeOut } from "..";
+import _ from "lodash";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 const log = pino({ prettyPrint: true });
@@ -123,21 +124,24 @@ function generatePathItemObject(
 async function loadTemplate(dir: string) {
   const filename = resolve(dir + "/openapi.yaml");
 
-  let baseDoc = parseDocument(
-    (await readFile(filename)).toString()
-  ).toJSON() as OpenAPIObject;
-  baseDoc.components = {
-    schemas: {},
-    securitySchemes: {},
-  };
+  const builder = new OpenApiBuilder();
 
-  return OpenApiBuilder.create(baseDoc);
+  _.merge(
+    builder.rootDoc,
+    parseDocument(
+      (await readFile(filename)).toString()
+    ).toJSON() as OpenAPIObject
+  );
+
+  return builder;
 }
 
 class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
-  static examples = ["$ vercel-openapi generate . --output public/openapi.yaml"];
+  static examples = [
+    "$ vercel-openapi generate . --output public/openapi.yaml",
+  ];
 
   static flags = {
     // add --version flag to show CLI version
