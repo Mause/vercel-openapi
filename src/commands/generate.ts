@@ -151,7 +151,7 @@ class Generate extends Command {
     outputFile: flags.string({ char: "o" }),
     inputFile: flags.string({
       char: "i",
-      description: "Defaults to [directory]/openapi.yaml",
+      description: "Defaults to [directory]/api/openapi.yaml",
     }),
   };
 
@@ -163,7 +163,7 @@ class Generate extends Command {
     log.level = flags.debug ? "debug" : "info";
 
     const result = await generateOpenapi(
-      flags.inputFile || args.directory + "/openapi.yaml",
+      flags.inputFile || args.directory + "/api/openapi.yaml",
       args.directory
     );
     await writeOut(result, flags);
