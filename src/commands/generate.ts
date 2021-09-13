@@ -13,6 +13,7 @@ import {
 import { validateDoc } from "../validation";
 import pino from "pino";
 import { writeOut } from "..";
+import _ from "lodash";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 const log = pino({ prettyPrint: true });
@@ -126,10 +127,7 @@ async function loadTemplate(dir: string) {
   let baseDoc = parseDocument(
     (await readFile(filename)).toString()
   ).toJSON() as OpenAPIObject;
-  baseDoc.components = {
-    schemas: {},
-    securitySchemes: {},
-  };
+  baseDoc = _.merge(new OpenApiBuilder().rootDoc, baseDoc);
 
   return OpenApiBuilder.create(baseDoc);
 }
@@ -137,7 +135,9 @@ async function loadTemplate(dir: string) {
 class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
-  static examples = ["$ vercel-openapi generate . --output public/openapi.yaml"];
+  static examples = [
+    "$ vercel-openapi generate . --output public/openapi.yaml",
+  ];
 
   static flags = {
     // add --version flag to show CLI version
