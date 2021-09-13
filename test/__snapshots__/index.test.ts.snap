@@ -36,8 +36,8 @@ paths:
       responses:
         default:
           description: Ok
-          application/json:
-            content:
+          content:
+            application/json:
               schema:
                 $ref: \\"#/components/schemas/GetRequest\\"
   /api/create:
@@ -46,8 +46,8 @@ paths:
       responses:
         default:
           description: Ok
-          application/json:
-            content:
+          content:
+            application/json:
               schema:
                 $ref: \\"#/components/schemas/PostRequest\\"
       requestBody:
@@ -55,13 +55,14 @@ paths:
           application/json:
             schema:
               $ref: \\"#/components/schemas/PostRequest\\"
+        required: true
     get:
       operationId: getCreate
       responses:
         default:
           description: Ok
-          application/json:
-            content:
+          content:
+            application/json:
               schema:
                 $ref: \\"#/components/schemas/PostRequest\\"
   /api/endpoint:
@@ -70,8 +71,8 @@ paths:
       responses:
         default:
           description: Ok
-          application/json:
-            content:
+          content:
+            application/json:
               schema:
                 $ref: \\"#/components/schemas/Shape\\"
 components:

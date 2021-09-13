@@ -9,6 +9,7 @@ import {
   PathItemObject,
   OpenAPIObject,
   OperationObject,
+  ContentObject,
 } from "openapi3-ts";
 import { validateDoc } from "../validation";
 import pino from "pino";
@@ -105,13 +106,7 @@ function generatePathItemObject(
       responses: {
         default: {
           description: "Ok",
-          "application/json": {
-            content: {
-              schema: {
-                $ref: "#/components/schemas/" + endpoint.responseShape,
-              },
-            },
-          },
+          content: buildContent(endpoint.responseShape!),
         },
       },
     });
@@ -120,18 +115,23 @@ function generatePathItemObject(
         throw new Error(`Missing requestShape for ${name} for ${method}`);
       }
       op.requestBody = {
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/" + endpoint.requestShape,
-            },
-          },
-        },
+        content: buildContent(endpoint.requestShape),
+        required: true,
       };
     }
   }
 
   return def;
+}
+
+function buildContent(ref: string): ContentObject {
+  return {
+    "application/json": {
+      schema: {
+        $ref: "#/components/schemas/" + ref,
+      },
+    },
+  };
 }
 
 async function loadTemplate(templateFile: string) {
