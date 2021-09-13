@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.0.15 android-arm64 node-v14.15.4
+vercel-openapi/0.0.15 linux-x64 node-v14.17.6
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -50,7 +50,7 @@ USAGE
 OPTIONS
   -d, --debug
   -h, --help                   show CLI help
-  -i, --inputFile=inputFile    Defaults to [directory]/openapi.yaml
+  -i, --inputFile=inputFile    Defaults to [directory]/api/openapi.yaml
   -o, --outputFile=outputFile
 
 EXAMPLE
