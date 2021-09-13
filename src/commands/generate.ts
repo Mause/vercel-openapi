@@ -137,7 +137,7 @@ async function loadTemplate(dir: string) {
 class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
-  static examples = ["$ vercel-openapi . --output public/openapi.yaml"];
+  static examples = ["$ vercel-openapi generate . --output public/openapi.yaml"];
 
   static flags = {
     // add --version flag to show CLI version
