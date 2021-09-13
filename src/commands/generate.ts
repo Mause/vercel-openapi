@@ -24,12 +24,12 @@ interface Endpoint {
   methods?: Set<keyof Pick<PathItemObject, "get">>;
 }
 
-async function generateOpenapi(dir: string) {
+async function generateOpenapi(templateFile: string, dir: string) {
   // register .ts extensions
   register({ cwd: dir, moduleTypes: { "*.ts": "cjs" } });
 
   dir = resolve(join(dir, "api"));
-  const doc = await loadTemplate(dir);
+  const doc = await loadTemplate(templateFile);
 
   for (const filename of (await readdir(resolve(dir))).sort()) {
     log.debug({ filename }, "Loading file");
@@ -121,8 +121,9 @@ function generatePathItemObject(
   return def;
 }
 
-async function loadTemplate(dir: string) {
-  const filename = resolve(dir + "/openapi.yaml");
+async function loadTemplate(templateFile: string) {
+  const filename = resolve(templateFile);
+  log.debug({ filename }, "Loading template");
 
   const builder = new OpenApiBuilder();
 
@@ -148,6 +149,10 @@ class Generate extends Command {
     debug: flags.boolean({ char: "d" }),
     help: flags.help({ char: "h" }),
     outputFile: flags.string({ char: "o" }),
+    inputFile: flags.string({
+      char: "i",
+      description: "Defaults to [directory]/openapi.yaml",
+    }),
   };
 
   static args = [{ name: "directory", required: true }];
@@ -157,7 +162,10 @@ class Generate extends Command {
 
     log.level = flags.debug ? "debug" : "info";
 
-    const result = await generateOpenapi(args.directory);
+    const result = await generateOpenapi(
+      flags.inputFile || args.directory + "/openapi.yaml",
+      args.directory
+    );
     await writeOut(result, flags);
   }
 }
