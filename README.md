@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.0.11 win32-x64 node-v14.17.4
+vercel-openapi/0.0.15 android-arm64 node-v14.15.4
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -36,6 +36,7 @@ USAGE
 <!-- commands -->
 
 - [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
+- [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
 - [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
 
 ## `vercel-openapi generate DIRECTORY`
@@ -49,11 +50,29 @@ USAGE
 OPTIONS
   -d, --debug
   -h, --help                   show CLI help
+  -i, --inputFile=inputFile    Defaults to [directory]/openapi.yaml
   -o, --outputFile=outputFile
 
 EXAMPLE
-  $ vercel-openapi . --output public/openapi.yaml
+  $ vercel-openapi generate . --output public/openapi.yaml
 ```
+
+## `vercel-openapi help [COMMAND]`
+
+display help for vercel-openapi
+
+```
+USAGE
+  $ vercel-openapi help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
 ## `vercel-openapi scaffold`
 
