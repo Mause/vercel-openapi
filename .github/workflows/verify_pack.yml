@@ -1,0 +1,18 @@
+on:
+  push:
+   - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          registry-url: "https://registry.npmjs.org"
+      - run: yarn --frozen
+      - run: yarn build
+      - run: yarn pack --no-git-tag-version --verbose
+      - run: tar -tvf *.tar.gz
