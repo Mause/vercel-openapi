@@ -1,7 +1,9 @@
 on: push
 
+name: Verify Pack
+
 jobs:
-  publish:
+  verify_pack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
