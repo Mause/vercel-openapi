@@ -14,5 +14,3 @@ jobs:
         uses: gozala/typescript-error-reporter-action@v1.0.5
       - run: yarn build
       - run: yarn test
-      - run: yarn pack --no-git-tag-version --verbose
-      - run: tar -ztvf *.tgz
