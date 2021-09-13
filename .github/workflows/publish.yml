@@ -14,6 +14,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: yarn --frozen
       - run: yarn build
-      - run: yarn publish --no-git-tag-version
+      - run: yarn publish --no-git-tag-version --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
