@@ -13,4 +13,4 @@ jobs:
       - run: yarn --frozen
       - run: yarn build
       - run: yarn pack --no-git-tag-version --verbose
-      - run: tar -tvf *.tar.gz
+      - run: tar -tvfg *.tgz
