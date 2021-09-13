@@ -7,14 +7,16 @@
 [![NPM](https://nodei.co/npm/vercel-openapi.png)](https://nodei.co/npm/vercel-openapi/)
 
 <!-- toc -->
-* [vercel-openapi](#vercel-openapi)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [vercel-openapi](#vercel-openapi)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
@@ -26,14 +28,16 @@ USAGE
   $ vercel-openapi COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
-* [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
-* [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
+
+- [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
+- [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
+- [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
 
 ## `vercel-openapi generate DIRECTORY`
 
@@ -86,4 +90,5 @@ OPTIONS
 EXAMPLE
   $ vercel-openapi scaffold --title FakeAPI --version 1.0.42
 ```
+
 <!-- commandsstop -->
