@@ -124,12 +124,16 @@ function generatePathItemObject(
 async function loadTemplate(dir: string) {
   const filename = resolve(dir + "/openapi.yaml");
 
-  let baseDoc = parseDocument(
-    (await readFile(filename)).toString()
-  ).toJSON() as OpenAPIObject;
-  baseDoc = _.merge(new OpenApiBuilder().rootDoc, baseDoc);
+  const builder = new OpenApiBuilder();
 
-  return OpenApiBuilder.create(baseDoc);
+  _.merge(
+    builder.rootDoc,
+    parseDocument(
+      (await readFile(filename)).toString()
+    ).toJSON() as OpenAPIObject
+  );
+
+  return builder;
 }
 
 class Generate extends Command {
