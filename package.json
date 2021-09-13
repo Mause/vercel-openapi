@@ -56,7 +56,7 @@
   "oclif": {
     "bin": "vercel-openapi",
     "repositoryPrefix": "https://github.com/Mause/vercel-openapi",
-    "commands": "src/commands"
+    "commands": "./lib/commands"
   },
   "repository": "Mause/vercel-openapi",
   "scripts": {
