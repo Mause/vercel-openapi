@@ -1,7 +1,5 @@
 import Command, { flags } from "@oclif/command";
-import { writeFile } from "fs/promises";
 import { OpenApiBuilder } from "openapi3-ts";
-import { stringify } from "yaml";
 import { writeOut } from "..";
 
 class Scaffold extends Command {
