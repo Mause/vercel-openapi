@@ -15,6 +15,6 @@ jobs:
       - run: yarn --frozen
       - run: yarn build
       - run: yarn test
-      - run: yarn publish --no-git-tag-version --verbose
+      - run: yarn publish --no-git-tag-version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
