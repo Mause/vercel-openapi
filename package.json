@@ -67,7 +67,8 @@
   "scripts": {
     "build": "tsc --noemit",
     "posttest": "echo 0 || eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "postpack": "rimraf oclif.manifest.json",
     "test": "mocha -r ts-node/register 'test/**/*.ts'",
     "version": "oclif-dev readme && git add README.md"
   },
