@@ -104,7 +104,14 @@ function generatePathItemObject(
       operationId: method + recased,
       responses: {
         default: {
-          $ref: "#/components/schemas/" + endpoint.responseShape,
+          description: "Ok",
+          "application/json": {
+            content: {
+              schema: {
+                $ref: "#/components/schemas/" + endpoint.responseShape,
+              },
+            },
+          },
         },
       },
     });
@@ -113,7 +120,13 @@ function generatePathItemObject(
         throw new Error(`Missing requestShape for ${name} for ${method}`);
       }
       op.requestBody = {
-        $ref: "#/components/schemas/" + endpoint.requestShape,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/" + endpoint.requestShape,
+            },
+          },
+        },
       };
     }
   }

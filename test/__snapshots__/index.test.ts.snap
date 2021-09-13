@@ -35,26 +35,45 @@ paths:
       operationId: getDynamic
       responses:
         default:
-          $ref: \\"#/components/schemas/GetRequest\\"
+          description: Ok
+          application/json:
+            content:
+              schema:
+                $ref: \\"#/components/schemas/GetRequest\\"
   /api/create:
     post:
       operationId: postCreate
       responses:
         default:
-          $ref: \\"#/components/schemas/PostRequest\\"
+          description: Ok
+          application/json:
+            content:
+              schema:
+                $ref: \\"#/components/schemas/PostRequest\\"
       requestBody:
-        $ref: \\"#/components/schemas/PostRequest\\"
+        content:
+          application/json:
+            schema:
+              $ref: \\"#/components/schemas/PostRequest\\"
     get:
       operationId: getCreate
       responses:
         default:
-          $ref: \\"#/components/schemas/PostRequest\\"
+          description: Ok
+          application/json:
+            content:
+              schema:
+                $ref: \\"#/components/schemas/PostRequest\\"
   /api/endpoint:
     get:
       operationId: getEndpoint
       responses:
         default:
-          $ref: \\"#/components/schemas/Shape\\"
+          description: Ok
+          application/json:
+            content:
+              schema:
+                $ref: \\"#/components/schemas/Shape\\"
 components:
   schemas:
     GetRequest:
