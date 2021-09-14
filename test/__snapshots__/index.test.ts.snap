@@ -69,6 +69,7 @@ paths:
     parameters:
       - name: dynamic
         in: path
+        required: true
         schema:
           type: string
   /api/endpoint:

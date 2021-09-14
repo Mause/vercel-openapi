@@ -84,6 +84,7 @@ function generatePath(
     .map((name) => ({
       name: name.substring(1, name.length - 1),
       in: "path",
+      required: true,
       schema: {
         type: "string",
       },
