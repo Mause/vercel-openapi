@@ -30,16 +30,6 @@ info:
   title: FakeAPI
   version: 0.0.1
 paths:
-  \\"/api/dynamic/{dynamic_segment}\\":
-    get:
-      operationId: getDynamic
-      responses:
-        default:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: \\"#/components/schemas/GetRequest\\"
   /api/create:
     post:
       operationId: postCreate
@@ -65,6 +55,22 @@ paths:
             application/json:
               schema:
                 $ref: \\"#/components/schemas/PostRequest\\"
+    parameters: []
+  \\"/api/dynamic/{dynamic}\\":
+    get:
+      operationId: getDynamicDynamic
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/GetRequest\\"
+    parameters:
+      - name: dynamic
+        in: path
+        schema:
+          type: string
   /api/endpoint:
     get:
       operationId: getEndpoint
@@ -75,15 +81,9 @@ paths:
             application/json:
               schema:
                 $ref: \\"#/components/schemas/Shape\\"
+    parameters: []
 components:
   schemas:
-    GetRequest:
-      properties:
-        name:
-          type: string
-      type: object
-      required:
-        - name
     PostRequest:
       properties:
         name:
@@ -100,6 +100,13 @@ components:
       type: object
       required:
         - id
+        - name
+    GetRequest:
+      properties:
+        name:
+          type: string
+      type: object
+      required:
         - name
     Shape:
       properties:

@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
-import { readdir, readFile, writeFile } from "fs/promises";
+import { readFile } from "fs/promises";
 import { resolve, join } from "path";
-import { parseDocument, stringify } from "yaml";
+import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
 import {
@@ -73,29 +73,38 @@ function generatePath(
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
   }
-  // TODO fix this check
-  const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
-  if (isDynamic) {
-    name = name.substr(1, name.length - 2);
-  }
 
-  const opea = generatePathItemObject(name, endpoint);
-  if (isDynamic) {
-    opea.parameters?.push({
-      name,
+  const opea = generatePathItemObject(
+    processParts(name, toTitlecase, ""),
+    endpoint
+  );
+  opea.parameters = name
+    .split("/")
+    .filter(partIsDynamic)
+    .map((name) => ({
+      name: name.substring(1, name.length - 1),
       in: "path",
       schema: {
         type: "string",
       },
-    });
-  }
+    }));
 
-  let path = "/api/" + name;
-  if (isDynamic) {
-    path += "/{" + name + "}";
-  }
+  const path = "/api/" + processParts(name, (part) => "{" + part + "}", "/");
 
   return [path, opea];
+}
+
+function processParts<T>(name: string, func: (s: string) => T, join: string) {
+  return name
+    .split("/")
+    .map((part) =>
+      partIsDynamic(part) ? func(part.substr(1, part.length - 2)) : part
+    )
+    .join(join);
+}
+
+function partIsDynamic(name: string) {
+  return name[0] == "[" && name[name.length - 1] == "]";
 }
 
 function generatePathItemObject(
@@ -105,7 +114,7 @@ function generatePathItemObject(
   const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
     str.toLowerCase()
   );
-  const recased = name[0].toUpperCase() + name.substring(1);
+  const recased = toTitlecase(name);
 
   const def: PathItemObject = {};
 
@@ -131,6 +140,10 @@ function generatePathItemObject(
   }
 
   return def;
+}
+
+function toTitlecase(name: string) {
+  return name[0].toUpperCase() + name.substring(1);
 }
 
 function buildContent(ref: string): ContentObject {
