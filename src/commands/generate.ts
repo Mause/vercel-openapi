@@ -171,6 +171,15 @@ async function loadTemplate(templateFile: string) {
   return builder;
 }
 
+const pair = flags.build({
+  parse(input, _context): [string, string] {
+    const idx = input.indexOf("=");
+    const key = input.substring(0, idx);
+    const value = input.substring(idx + 1);
+    return [key, value];
+  },
+});
+
 class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
@@ -187,12 +196,26 @@ class Generate extends Command {
       char: "i",
       description: "Defaults to [directory]/api/openapi.yaml",
     }),
+    envVar: pair({
+      multiple: true,
+      char: "e",
+      helpValue: "KEY=VALUE",
+      description: `Environment variables to have in scope for loading the endpoints.
+
+Eg.
+TS_NODE_COMPILER_OPTIONS={"module": "commonjs"}`,
+    }),
   };
 
   static args = [{ name: "directory", required: true }];
 
   async run() {
     const { args, flags } = this.parse(Generate);
+
+    // These will only apply for this process and its children.
+    for (const [key, value] of flags.envVar || []) {
+      process.env[key] = value;
+    }
 
     log.level = flags.debug ? "debug" : "info";
 
