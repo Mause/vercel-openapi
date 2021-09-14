@@ -1,5 +1,6 @@
 import { IsString } from "class-validator";
 import { VercelRequest, VercelResponse } from "@vercel/node";
+import { Endpoint } from "./../../../src";
 
 export const methods = new Set(["POST", "GET"]);
 
@@ -20,8 +21,10 @@ class PostResponse extends PostRequest {
   }
 }
 
-export const requestShape = PostRequest.name;
-export const responseShape = PostRequest.name;
-export const tags = ["create"];
+export const openapiMetadata: Endpoint = {
+  requestShape: PostRequest.name,
+  responseShape: PostRequest.name,
+  tags: ["create"],
+};
 
 export default (_res: VercelRequest, _req: VercelResponse) => {};
