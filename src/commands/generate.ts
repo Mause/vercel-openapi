@@ -81,7 +81,7 @@ function generatePath(
   const opea = generatePathItemObject(name, endpoint);
   if (isDynamic) {
     opea.parameters?.push({
-      name: "dynamic_segment",
+      name,
       in: "path",
       schema: {
         type: "string",
@@ -91,7 +91,7 @@ function generatePath(
 
   let path = "/api/" + name;
   if (isDynamic) {
-    path += "/{dynamic_segment}";
+    path += "/{" + name + "}";
   }
 
   return [path, opea];
