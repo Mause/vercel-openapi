@@ -10,5 +10,6 @@ class Shape {
 }
 
 export const responseShape = Shape.name;
+export const tags = ["endpoint"];
 
 export default () => {};

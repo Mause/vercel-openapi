@@ -23,6 +23,7 @@ const log = pino({ prettyPrint: true });
 interface Endpoint {
   responseShape?: string;
   requestShape?: string;
+  tags?: string[];
   methods?: Set<keyof Pick<PathItemObject, "get">>;
 }
 
@@ -118,6 +119,7 @@ function generatePathItemObject(
   for (const method of methods) {
     const op: OperationObject = (def[method] = {
       operationId: method + recased,
+      tags: endpoint.tags,
       responses: {
         default: {
           description: "Ok",
