@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
-import { readdir, readFile, writeFile } from "fs/promises";
-import { resolve, join, parse } from "path";
-import { parseDocument, stringify } from "yaml";
+import { readFile } from "fs/promises";
+import { resolve, join } from "path";
+import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
 import {
@@ -15,6 +15,7 @@ import { validateDoc } from "../validation";
 import pino from "pino";
 import { writeOut } from "..";
 import _ from "lodash";
+import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 const log = pino({ prettyPrint: true });
@@ -32,9 +33,16 @@ async function generateOpenapi(templateFile: string, dir: string) {
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(templateFile);
 
-  for (const filename of (await readdir(resolve(dir))).sort()) {
+  const paths: string[] = await new Promise((resolve, reject) => {
+    glob("**/*.ts", { cwd: dir }, (err, val) => {
+      if (err) reject(err);
+      else resolve(val || []);
+    });
+  });
+
+  for (const filename of paths.sort()) {
     log.debug({ filename }, "Loading file");
-    let name = parse(filename).name;
+    let name = filename.substring(0, filename.lastIndexOf("."));
     if (filename.endsWith(".ts")) {
       doc.addPath(...generatePath(doc, name, dir));
     }
@@ -65,28 +73,38 @@ function generatePath(
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
   }
-  const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
-  if (isDynamic) {
-    name = name.substr(1, name.length - 2);
-  }
 
-  const opea = generatePathItemObject(name, endpoint);
-  if (isDynamic) {
-    opea.parameters?.push({
-      name: "dynamic_segment",
+  const opea = generatePathItemObject(
+    processParts(name, toTitlecase, ""),
+    endpoint
+  );
+  opea.parameters = name
+    .split("/")
+    .filter(partIsDynamic)
+    .map((name) => ({
+      name: name.substring(1, name.length - 1),
       in: "path",
       schema: {
         type: "string",
       },
-    });
-  }
+    }));
 
-  let path = "/api/" + name;
-  if (isDynamic) {
-    path += "/{dynamic_segment}";
-  }
+  const path = "/api/" + processParts(name, (part) => "{" + part + "}", "/");
 
   return [path, opea];
+}
+
+function processParts<T>(name: string, func: (s: string) => T, join: string) {
+  return name
+    .split("/")
+    .map((part) =>
+      partIsDynamic(part) ? func(part.substr(1, part.length - 2)) : part
+    )
+    .join(join);
+}
+
+function partIsDynamic(name: string) {
+  return name[0] == "[" && name[name.length - 1] == "]";
 }
 
 function generatePathItemObject(
@@ -96,7 +114,7 @@ function generatePathItemObject(
   const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
     str.toLowerCase()
   );
-  const recased = name[0].toUpperCase() + name.substring(1);
+  const recased = toTitlecase(name);
 
   const def: PathItemObject = {};
 
@@ -122,6 +140,10 @@ function generatePathItemObject(
   }
 
   return def;
+}
+
+function toTitlecase(name: string) {
+  return name[0].toUpperCase() + name.substring(1);
 }
 
 function buildContent(ref: string): ContentObject {
