@@ -73,6 +73,7 @@ function generatePath(
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
   }
+  // TODO fix this check
   const isDynamic = name[0] == "[" && name[name.length - 1] == "]";
   if (isDynamic) {
     name = name.substr(1, name.length - 2);
