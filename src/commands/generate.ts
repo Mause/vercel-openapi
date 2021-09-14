@@ -44,7 +44,7 @@ async function generateOpenapi(templateFile: string, dir: string) {
     log.debug({ filename }, "Loading file");
     let name = filename.substring(0, filename.lastIndexOf("."));
     if (filename.endsWith(".ts")) {
-      doc.addPath(...generatePath(doc, name, dir));
+      doc.addPath(...generatePath(name, dir));
     }
   }
 
@@ -64,11 +64,7 @@ async function generateOpenapi(templateFile: string, dir: string) {
   return doc.rootDoc;
 }
 
-function generatePath(
-  doc: OpenApiBuilder,
-  name: string,
-  dir: string
-): [string, PathItemObject] {
+function generatePath(name: string, dir: string): [string, PathItemObject] {
   const endpoint = require(join(dir, name)) as Endpoint; // register models
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
