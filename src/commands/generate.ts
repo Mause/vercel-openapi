@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { readdir, readFile, writeFile } from "fs/promises";
-import { resolve, join, parse } from "path";
+import { resolve, join } from "path";
 import { parseDocument, stringify } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import { register } from "ts-node";
@@ -42,7 +42,7 @@ async function generateOpenapi(templateFile: string, dir: string) {
 
   for (const filename of paths.sort()) {
     log.debug({ filename }, "Loading file");
-    let name = parse(filename).name;
+    let name = filename.substring(0, filename.lastIndexOf("."));
     if (filename.endsWith(".ts")) {
       doc.addPath(...generatePath(doc, name, dir));
     }
