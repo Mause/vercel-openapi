@@ -15,6 +15,7 @@ import { validateDoc } from "../validation";
 import pino from "pino";
 import { writeOut } from "..";
 import _ from "lodash";
+import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 
 const log = pino({ prettyPrint: true });
@@ -32,7 +33,14 @@ async function generateOpenapi(templateFile: string, dir: string) {
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(templateFile);
 
-  for (const filename of (await readdir(resolve(dir))).sort()) {
+  const paths: string[] = await new Promise((resolve, reject) => {
+    glob("**/*.ts", { cwd: dir }, (err, val) => {
+      if (err) reject(err);
+      else resolve(val || []);
+    });
+  });
+
+  for (const filename of paths.sort()) {
     log.debug({ filename }, "Loading file");
     let name = parse(filename).name;
     if (filename.endsWith(".ts")) {
