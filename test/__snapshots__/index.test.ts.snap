@@ -33,6 +33,8 @@ paths:
   /api/create:
     post:
       operationId: postCreate
+      tags:
+        - create
       responses:
         default:
           description: Ok
@@ -48,6 +50,8 @@ paths:
         required: true
     get:
       operationId: getCreate
+      tags:
+        - create
       responses:
         default:
           description: Ok

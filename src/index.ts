@@ -10,7 +10,10 @@ export async function writeOut(
   result: OpenAPIObject,
   flags: { outputFile: string | undefined }
 ) {
-  const output = stringify(result, undefined, 2);
+  const output = stringify(result, undefined, {
+    indent: 2,
+    aliasDuplicateObjects: false,
+  });
   if (flags.outputFile) {
     await writeFile(flags.outputFile, output);
   } else {

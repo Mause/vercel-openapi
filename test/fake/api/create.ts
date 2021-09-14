@@ -22,5 +22,6 @@ class PostResponse extends PostRequest {
 
 export const requestShape = PostRequest.name;
 export const responseShape = PostRequest.name;
+export const tags = ["create"];
 
 export default (_res: VercelRequest, _req: VercelResponse) => {};
