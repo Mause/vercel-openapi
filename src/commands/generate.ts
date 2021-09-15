@@ -212,12 +212,13 @@ TS_NODE_COMPILER_OPTIONS={"module": "commonjs"}`,
   async run() {
     const { args, flags } = this.parse(Generate);
 
+    log.level = flags.debug ? "debug" : "info";
+    
     // These will only apply for this process and its children.
     for (const [key, value] of flags.envVar || []) {
+      log.debug({key, value}, 'Setting env var');      
       process.env[key] = value;
     }
-
-    log.level = flags.debug ? "debug" : "info";
 
     const result = await generateOpenapi(
       flags.inputFile || args.directory + "/api/openapi.yaml",
