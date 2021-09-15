@@ -67,7 +67,9 @@ async function generateOpenapi(templateFile: string, dir: string) {
 
 function generatePath(name: string, dir: string): [string, PathItemObject] {
   const module = require(join(dir, name));
-  let endpoint = (module.openapi ? module.openapiMetadata : module) as Endpoint; // register models
+  let endpoint = (
+    module.openapiMetadata ? module.openapiMetadata : module
+  ) as Endpoint; // register models
 
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
