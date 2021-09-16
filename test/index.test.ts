@@ -1,6 +1,7 @@
 import { expect, test } from "@oclif/test";
 import { jestSnapshotPlugin } from "mocha-chai-jest-snapshot";
 import chai from "chai";
+import { parseDocument } from "yaml";
 
 chai.use(jestSnapshotPlugin());
 
@@ -25,7 +26,9 @@ describe("vercel-openapi", () => {
     .stdout()
     .do(() => cmd.run(["generate", "test/fake", "--gitVersion"]))
     .it("runs --gitVersion", (ctx) => {
-      expect(ctx.stdout).toMatchSnapshot();
+      expect(parseDocument(ctx.stdout).getIn(["info", "version"])).to.match(
+        /^0.0.1\+[a-z0-9]{7}$/
+      );
     });
 });
 
