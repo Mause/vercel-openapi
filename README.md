@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.3 linux-x64 node-v16.8.0
+vercel-openapi/0.1.4 linux-x64 node-v16.8.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
