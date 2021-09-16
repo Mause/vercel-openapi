@@ -17,7 +17,6 @@
     "class-validator": "^0.13.1",
     "class-validator-jsonschema": "^3.1.0",
     "glob": "^7.1.7",
-    "isomorphic-git": "^1.10.0",
     "openapi3-ts": "^2.0.1",
     "pino": "^6.13.2",
     "pino-pretty": "^7.0.0",
@@ -79,7 +78,6 @@
   "types": "lib/index.d.ts",
   "peerDependencies": {
     "@types/node": "^16",
-    "@vercel/node": "*",
-    "isomorphic-git": "^1"
+    "@vercel/node": "*"
   }
 }
