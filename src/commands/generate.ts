@@ -42,6 +42,7 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
+  flags: typeof Generate['flags'],
   moduleSystem: ModuleSystem
 ) {
   // register .ts extensions
@@ -49,6 +50,10 @@ async function generateOpenapi(
 
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(templateFile);
+    
+  if (flags.gitVersion) {
+    doc.info.version += '.dev0+' + await getCommitHash(dir);
+  }
 
   const paths: string[] = await new Promise((resolve, reject) => {
     glob("**/*.ts", { cwd: dir }, (err, val) => {
@@ -187,6 +192,15 @@ async function loadTemplate(templateFile: string) {
   return builder;
 }
 
+async function getCommitHash(dir: string) {
+const git = require('isomorphic-git');
+    git.plugins.set('fs', require('fs'));
+let gitroot = await git.findRoot({
+  filepath: dir
+});
+    return await git.resolveRef({ gitroot, ref: 'HEAD' });
+}
+
 const pair = flags.build({
   parse(input, _context): [string, string] {
     const idx = input.indexOf("=");
@@ -219,6 +233,7 @@ class Generate extends Command {
       description:
         "Environment variables to have in scope for loading the endpoints.",
     }),
+    gitVersion: flags.boolean(),
     moduleSystem: flags.enum<ModuleSystem>({
       char: "m",
       description: `Sets the module system for loading the endpoints
