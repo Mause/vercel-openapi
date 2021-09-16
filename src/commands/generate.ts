@@ -1,5 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { readFile } from "fs/promises";
+import fs from "fs";
 import { resolve, join } from "path";
 import { parseDocument } from "yaml";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
@@ -195,11 +196,14 @@ async function loadTemplate(templateFile: string) {
 
 async function getCommitHash(dir: string) {
   const git = require("isomorphic-git");
-  git.plugins.set("fs", require("fs"));
-  let gitroot = await git.findRoot({
+  const gitdir = await git.findRoot({
+    fs,
     filepath: dir,
   });
-  return await git.resolveRef({ gitroot, ref: "HEAD" });
+  return (await git.resolveRef({ fs, ref: "HEAD", dir: gitdir })).substring(
+    0,
+    7
+  );
 }
 
 const pair = flags.build({

@@ -24,6 +24,123 @@ servers: []
 
 exports[`vercel-openapi runs --debug 1`] = `""`;
 
+exports[`vercel-openapi runs --gitVersion 1`] = `
+"openapi: 3.1.0
+info:
+  title: FakeAPI
+  version: 0.0.1+4a5df20
+paths:
+  /api/create:
+    post:
+      operationId: postCreate
+      tags:
+        - create
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/PostRequest\\"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: \\"#/components/schemas/PostRequest\\"
+        required: true
+    get:
+      operationId: getCreate
+      tags:
+        - create
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/PostRequest\\"
+    parameters: []
+  \\"/api/dynamic/{dynamic}\\":
+    get:
+      operationId: getDynamicDynamic
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/GetRequest\\"
+    parameters:
+      - name: dynamic
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/endpoint:
+    get:
+      operationId: getEndpoint
+      tags:
+        - endpoint
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/Shape\\"
+    parameters: []
+components:
+  schemas:
+    PostRequest:
+      properties:
+        name:
+          type: string
+      type: object
+      required:
+        - name
+    PostResponse:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      type: object
+      required:
+        - id
+        - name
+    GetRequest:
+      properties:
+        name:
+          type: string
+      type: object
+      required:
+        - name
+    Shape:
+      properties:
+        id:
+          type: string
+      type: object
+      required:
+        - id
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes:
+    AuthHeader:
+      scheme: bearer
+      type: http
+  links: {}
+  callbacks: {}
+tags: []
+servers: []
+security:
+  - AuthHeader: []
+
+"
+`;
+
 exports[`vercel-openapi runs 1`] = `
 "openapi: 3.1.0
 info:

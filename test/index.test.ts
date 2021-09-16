@@ -20,6 +20,13 @@ describe("vercel-openapi", () => {
     .it("runs --debug", (ctx) => {
       expect(ctx.stderr).toMatchSnapshot();
     });
+
+  test
+    .stdout()
+    .do(() => cmd.run(["generate", "test/fake", "--gitVersion"]))
+    .it("runs --gitVersion", (ctx) => {
+      expect(ctx.stdout).toMatchSnapshot();
+    });
 });
 
 describe("scaffold", () => {
