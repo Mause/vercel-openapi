@@ -17,6 +17,7 @@ import { writeOut } from "..";
 import _ from "lodash";
 import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
+import Parser from "@oclif/parser";
 
 const log = pino({ prettyPrint: true });
 
@@ -42,7 +43,7 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  flags: typeof Generate["flags"],
+  flags: Parser.OutputFlags<typeof Generate["flags"]>,
   moduleSystem: ModuleSystem
 ) {
   // register .ts extensions
@@ -52,7 +53,7 @@ async function generateOpenapi(
   const doc = await loadTemplate(templateFile);
 
   if (flags.gitVersion) {
-    doc.info.version += ".dev0+" + (await getCommitHash(dir));
+    doc.rootDoc.info.version += "+" + (await getCommitHash(dir));
   }
 
   const paths: string[] = await new Promise((resolve, reject) => {
@@ -263,6 +264,7 @@ class Generate extends Command {
     const result = await generateOpenapi(
       flags.inputFile || args.directory + "/api/openapi.yaml",
       args.directory,
+      flags,
       flags.moduleSystem
     );
     await writeOut(result, flags);
