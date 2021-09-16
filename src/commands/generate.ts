@@ -27,9 +27,25 @@ interface Endpoint {
   methods?: Set<keyof Pick<PathItemObject, "get">>;
 }
 
-async function generateOpenapi(templateFile: string, dir: string) {
+enum ModuleSystem {
+  CommonJS = "CommonJS",
+  AMD = "AMD",
+  System = "System",
+  UMD = "UMD",
+  ES6 = "ES6",
+  ES2015 = "ES2015",
+  ES2020 = "ES2020",
+  ESNext = "ESNext",
+  None = "None",
+}
+
+async function generateOpenapi(
+  templateFile: string,
+  dir: string,
+  moduleSystem: ModuleSystem
+) {
   // register .ts extensions
-  register({ cwd: dir, moduleTypes: { "*.ts": "cjs" } });
+  register({ cwd: dir, compilerOptions: { module: moduleSystem } });
 
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(templateFile);
@@ -200,10 +216,19 @@ class Generate extends Command {
       multiple: true,
       char: "e",
       helpValue: "KEY=VALUE",
-      description: `Environment variables to have in scope for loading the endpoints.
-
-Eg.
-TS_NODE_COMPILER_OPTIONS={"module": "commonjs"}`,
+      description:
+        "Environment variables to have in scope for loading the endpoints.",
+    }),
+    moduleSystem: flags.enum<ModuleSystem>({
+      char: "m",
+      description: `Sets the module system for loading the endpoints
+      
+      If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
+      vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
+      variable before the cli starts.
+      `,
+      options: Object.values(ModuleSystem),
+      default: ModuleSystem.None,
     }),
   };
 
@@ -222,7 +247,8 @@ TS_NODE_COMPILER_OPTIONS={"module": "commonjs"}`,
 
     const result = await generateOpenapi(
       flags.inputFile || args.directory + "/api/openapi.yaml",
-      args.directory
+      args.directory,
+      flags.moduleSystem
     );
     await writeOut(result, flags);
   }
