@@ -42,7 +42,7 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  moduleSystem: ModuleSystem
+  moduleSystem?: ModuleSystem
 ) {
   // register .ts extensions
   register({ cwd: dir, compilerOptions: { module: moduleSystem } });
@@ -227,8 +227,7 @@ class Generate extends Command {
       vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
       variable before the cli starts.
       `,
-      options: Object.values(ModuleSystem),
-      default: ModuleSystem.None,
+      options: Object.values(ModuleSystem)
     }),
   };
 
