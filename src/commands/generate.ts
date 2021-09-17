@@ -42,7 +42,7 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  moduleSystem: ModuleSystem
+  moduleSystem?: ModuleSystem
 ) {
   // register .ts extensions
   register({ cwd: dir, compilerOptions: { module: moduleSystem } });
@@ -228,7 +228,6 @@ class Generate extends Command {
       variable before the cli starts.
       `,
       options: Object.values(ModuleSystem),
-      default: ModuleSystem.None,
     }),
   };
 
