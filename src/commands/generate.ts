@@ -227,7 +227,7 @@ class Generate extends Command {
       vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
       variable before the cli starts.
       `,
-      options: Object.values(ModuleSystem)
+      options: Object.values(ModuleSystem),
     }),
   };
 
