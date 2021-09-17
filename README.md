@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.4 linux-x64 node-v16.8.0
+vercel-openapi/0.1.4 linux-x64 node-v14.17.6
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -60,7 +60,7 @@ OPTIONS
       Defaults to [directory]/api/openapi.yaml
 
   -m, --moduleSystem=(CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None)
-      [default: None] Sets the module system for loading the endpoints
+      Sets the module system for loading the endpoints
 
              If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
              vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
