@@ -157,8 +157,8 @@ function generatePathItemObject(
   return def;
 }
 
-function toTitlecase(name: string) {
-  return name[0].toUpperCase() + name.substring(1);
+function toTitlecase(part: string) {
+  return _.startCase(part).replace(/ /g, "");
 }
 
 function buildContent(ref: string): ContentObject {

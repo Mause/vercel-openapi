@@ -76,6 +76,27 @@ paths:
         required: true
         schema:
           type: string
+  \\"/api/dynamic/{id1}/subdir/{id2}\\":
+    get:
+      operationId: getDynamicId1SubdirId2
+      responses:
+        default:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: \\"#/components/schemas/Thing\\"
+    parameters:
+      - name: id1
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id2
+        in: path
+        required: true
+        schema:
+          type: string
   /api/endpoint:
     get:
       operationId: getEndpoint
@@ -115,6 +136,14 @@ components:
       type: object
       required:
         - name
+    Thing:
+      properties:
+        t:
+          pattern: ^[a-zA-Z]+$
+          type: string
+      type: object
+      required:
+        - t
     Shape:
       properties:
         id:
