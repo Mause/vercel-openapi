@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.2 linux-x64 node-v14.17.6
+vercel-openapi/0.1.5 linux-x64 node-v14.17.6
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -50,14 +50,21 @@ USAGE
 OPTIONS
   -d, --debug
 
-  -e, --envVar=KEY=VALUE       Environment variables to have in scope for loading the endpoints.
+  -e, --envVar=KEY=VALUE
+      Environment variables to have in scope for loading the endpoints.
 
-                               Eg.
-                               TS_NODE_COMPILER_OPTIONS={"module": "commonjs"}
+  -h, --help
+      show CLI help
 
-  -h, --help                   show CLI help
+  -i, --inputFile=inputFile
+      Defaults to [directory]/api/openapi.yaml
 
-  -i, --inputFile=inputFile    Defaults to [directory]/api/openapi.yaml
+  -m, --moduleSystem=(CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None)
+      Sets the module system for loading the endpoints
+
+             If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
+             vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
+             variable before the cli starts.
 
   -o, --outputFile=outputFile
 

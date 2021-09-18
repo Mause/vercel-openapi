@@ -23,7 +23,7 @@ class PostResponse extends PostRequest {
 
 export const openapiMetadata: Endpoint = {
   requestShape: PostRequest.name,
-  responseShape: PostRequest.name,
+  responseShape: PostResponse.name,
   tags: ["create"],
 };
 
