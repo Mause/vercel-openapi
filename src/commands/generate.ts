@@ -1,4 +1,5 @@
 import { Command, flags } from "@oclif/command";
+import git from "isomorphic-git";
 import { readFile } from "fs/promises";
 import fs from "fs";
 import { resolve, join } from "path";
@@ -44,11 +45,10 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  flags: Parser.OutputFlags<typeof Generate["flags"]>,
-  moduleSystem?: ModuleSystem
+  flags: Parser.OutputFlags<typeof Generate["flags"]>
 ) {
   // register .ts extensions
-  register({ cwd: dir, compilerOptions: { module: moduleSystem } });
+  register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
 
   dir = resolve(join(dir, "api"));
   const doc = await loadTemplate(templateFile);
@@ -195,7 +195,6 @@ async function loadTemplate(templateFile: string) {
 }
 
 async function getCommitHash(dir: string) {
-  const git = require("isomorphic-git");
   const gitdir = await git.findRoot({
     fs,
     filepath: dir,
@@ -267,8 +266,7 @@ class Generate extends Command {
     const result = await generateOpenapi(
       flags.inputFile || args.directory + "/api/openapi.yaml",
       args.directory,
-      flags,
-      flags.moduleSystem
+      flags
     );
     await writeOut(result, flags);
   }
