@@ -68,6 +68,8 @@ OPTIONS
 
   -o, --outputFile=outputFile
 
+  --gitVersion
+
 EXAMPLE
   $ vercel-openapi generate . --output public/openapi.yaml
 ```
