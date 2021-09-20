@@ -51,10 +51,12 @@ async function generateOpenapi(
   register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
 
   dir = resolve(join(dir, "api"));
+  log.info({apiRoot: dir}, 'Resolved api root');
   const doc = await loadTemplate(templateFile);
 
   if (flags.gitVersion) {
     doc.rootDoc.info.version += "+" + (await getCommitHash(dir));
+    log.info(doc.rootDoc.info, 'Appended git hash to version');
   }
 
   const paths: string[] = await new Promise((resolve, reject) => {
@@ -237,7 +239,9 @@ class Generate extends Command {
       description:
         "Environment variables to have in scope for loading the endpoints.",
     }),
-    gitVersion: flags.boolean(),
+    gitVersion: flags.boolean({
+      description: 'Append the short git hash to the end of the api version'
+    }),
     moduleSystem: flags.enum<ModuleSystem>({
       char: "m",
       description: `Sets the module system for loading the endpoints
