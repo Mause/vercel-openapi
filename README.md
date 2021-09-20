@@ -7,14 +7,16 @@
 [![NPM](https://nodei.co/npm/vercel-openapi.png)](https://nodei.co/npm/vercel-openapi/)
 
 <!-- toc -->
-* [vercel-openapi](#vercel-openapi)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [vercel-openapi](#vercel-openapi)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
@@ -26,14 +28,16 @@ USAGE
   $ vercel-openapi COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
-* [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
-* [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
+
+- [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
+- [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
+- [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
 
 ## `vercel-openapi generate DIRECTORY`
 
@@ -57,7 +61,7 @@ OPTIONS
 
   -m, --moduleSystem=(CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None)
       Sets the module system for loading the endpoints
-      
+
              If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
              vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
              variable before the cli starts.
@@ -103,4 +107,5 @@ OPTIONS
 EXAMPLE
   $ vercel-openapi scaffold --title FakeAPI --version 1.0.42
 ```
+
 <!-- commandsstop -->
