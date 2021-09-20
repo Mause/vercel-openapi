@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.6 linux-x64 node-v16.8.0
+vercel-openapi/0.1.6 linux-x64 node-v14.17.6
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -69,6 +69,7 @@ OPTIONS
   -o, --outputFile=outputFile
 
   --gitVersion
+      Append the short git hash to the end of the api version
 
 EXAMPLE
   $ vercel-openapi generate . --output public/openapi.yaml
