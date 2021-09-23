@@ -4,14 +4,14 @@ repos:
     hooks:
       - id: prettier
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: "v8.0.0-beta.2" # Use the sha / tag you want to point at
+    rev: "v7.32.0"
     hooks:
       - id: eslint
         args: [--fix]
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
         types: [file]
         additional_dependencies:
-          - eslint@4.15.0
+          - eslint@7.32.0
           - eslint-config-google@0.7.1
           - eslint-loader@1.6.1
           - eslint-plugin-react@6.10.3
