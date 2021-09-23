@@ -134,7 +134,7 @@ function generatePathItemObject(
   name: string,
   endpoint: Endpoint,
 ): PathItemObject {
-  const methods = [...endpoint.methods || ["get"]].map(string =>
+  const methods = [...(endpoint.methods || ["get"])].map(string =>
     string.toLowerCase(),
   );
   const recased = toTitlecase(name);
