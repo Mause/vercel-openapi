@@ -1,7 +1,7 @@
-import { expect, test } from "@oclif/test";
-import { jestSnapshotPlugin } from "mocha-chai-jest-snapshot";
+import {expect, test} from "@oclif/test";
+import {jestSnapshotPlugin} from "mocha-chai-jest-snapshot";
 import chai from "chai";
-import { parseDocument } from "yaml";
+import {parseDocument} from "yaml";
 
 chai.use(jestSnapshotPlugin());
 
@@ -11,23 +11,23 @@ describe("vercel-openapi", () => {
   test
     .stdout()
     .do(() => cmd.run(["generate", "test/fake"]))
-    .it("runs", (ctx) => {
-      expect(ctx.stdout).toMatchSnapshot();
+    .it("runs", context => {
+      expect(context.stdout).toMatchSnapshot();
     });
 
   test
     .stderr()
     .do(() => cmd.run(["generate", "test/fake", "--debug"]))
-    .it("runs --debug", (ctx) => {
-      expect(ctx.stderr).toMatchSnapshot();
+    .it("runs --debug", context => {
+      expect(context.stderr).toMatchSnapshot();
     });
 
   test
     .stdout()
     .do(() => cmd.run(["generate", "test/fake", "--gitVersion"]))
-    .it("runs --gitVersion", (ctx) => {
-      expect(parseDocument(ctx.stdout).getIn(["info", "version"])).to.match(
-        /^0.0.1\+[a-z0-9]{7}$/
+    .it("runs --gitVersion", context => {
+      expect(parseDocument(context.stdout).getIn(["info", "version"])).to.match(
+        /^0.0.1\+[\da-z]{7}$/,
       );
     });
 });
@@ -36,9 +36,9 @@ describe("scaffold", () => {
   test
     .stdout()
     .do(() =>
-      cmd.run(["scaffold", "--title", "FakeAPI", "--version", "1.0.42"])
+      cmd.run(["scaffold", "--title", "FakeAPI", "--version", "1.0.42"]),
     )
-    .it("runs scaffold", (ctx) => {
-      expect(ctx.stdout).toMatchSnapshot();
+    .it("runs scaffold", context => {
+      expect(context.stdout).toMatchSnapshot();
     });
 });

@@ -1,11 +1,11 @@
-import { Command, flags } from "@oclif/command";
+import {Command, flags} from "@oclif/command";
 import git from "isomorphic-git";
-import { readFile } from "fs/promises";
+import {readFile} from "fs/promises";
 import fs from "fs";
-import { resolve, join } from "path";
-import { parseDocument } from "yaml";
-import { validationMetadatasToSchemas } from "class-validator-jsonschema";
-import { register } from "ts-node";
+import {resolve, join} from "path";
+import {parseDocument} from "yaml";
+import {validationMetadatasToSchemas} from "class-validator-jsonschema";
+import {register} from "ts-node";
 import {
   OpenApiBuilder,
   PathItemObject,
@@ -13,15 +13,15 @@ import {
   OperationObject,
   ContentObject,
 } from "openapi3-ts";
-import { validateDoc } from "../validation";
+import {validateDoc as validateDocument} from "../validation";
 import pino from "pino";
-import { writeOut } from "..";
+import {writeOut} from "..";
 import _ from "lodash";
 import glob from "glob";
-const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
+const {defaultMetadataStorage} = require("class-transformer/cjs/storage");
 import Parser from "@oclif/parser";
 
-const log = pino({ prettyPrint: true });
+const log = pino({prettyPrint: true});
 
 interface Endpoint {
   responseShape?: string;
@@ -45,32 +45,32 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  flags: Parser.OutputFlags<typeof Generate["flags"]>
+  flags: Parser.OutputFlags<typeof Generate["flags"]>,
 ) {
   // register .ts extensions
-  register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
+  register({cwd: dir, compilerOptions: {module: flags.moduleSystem}});
 
   dir = resolve(join(dir, "api"));
-  log.info({ apiRoot: dir }, "Resolved api root");
-  const doc = await loadTemplate(templateFile);
+  log.info({apiRoot: dir}, "Resolved api root");
+  const document = await loadTemplate(templateFile);
 
   if (flags.gitVersion) {
-    doc.rootDoc.info.version += "+" + (await getCommitHash(dir));
-    log.info(doc.rootDoc.info, "Appended git hash to version");
+    document.rootDoc.info.version += "+" + (await getCommitHash(dir));
+    log.info(document.rootDoc.info, "Appended git hash to version");
   }
 
   const paths: string[] = await new Promise((resolve, reject) => {
-    glob("**/*.ts", { cwd: dir }, (err, val) => {
-      if (err) reject(err);
-      else resolve(val || []);
+    glob("**/*.ts", {cwd: dir}, (error, value) => {
+      if (error) reject(error);
+      else resolve(value || []);
     });
   });
 
   for (const filename of paths.sort()) {
-    log.debug({ filename }, "Loading file");
-    let name = filename.substring(0, filename.lastIndexOf("."));
+    log.debug({filename}, "Loading file");
+    const name = filename.slice(0, Math.max(0, filename.lastIndexOf(".")));
     if (filename.endsWith(".ts")) {
-      doc.addPath(...generatePath(name, dir));
+      document.addPath(...generatePath(name, dir));
     }
   }
 
@@ -78,16 +78,16 @@ async function generateOpenapi(
     validationMetadatasToSchemas({
       refPointerPrefix: "#/components/schemas/",
       classTransformerMetadataStorage: defaultMetadataStorage,
-    })
+    }),
   )) {
-    log.debug({ schemaName: name }, "Adding schema");
-    doc.addSchema(name, schema);
+    log.debug({schemaName: name}, "Adding schema");
+    document.addSchema(name, schema);
   }
 
-  validateDoc(doc);
+  validateDocument(document);
   log.debug({}, "Validation successful");
 
-  return doc.rootDoc;
+  return document.rootDoc;
 }
 
 function generatePath(name: string, dir: string): [string, PathItemObject] {
@@ -98,12 +98,12 @@ function generatePath(name: string, dir: string): [string, PathItemObject] {
 
   const opea = generatePathItemObject(
     processParts(name, toTitlecase, ""),
-    endpoint
+    endpoint,
   );
   opea.parameters = name
     .split("/")
     .filter(partIsDynamic)
-    .map((name) => ({
+    .map(name => ({
       name: name.substring(1, name.length - 1),
       in: "path",
       required: true,
@@ -112,7 +112,7 @@ function generatePath(name: string, dir: string): [string, PathItemObject] {
       },
     }));
 
-  const path = "/api/" + processParts(name, (part) => "{" + part + "}", "/");
+  const path = "/api/" + processParts(name, part => "{" + part + "}", "/");
 
   return [path, opea];
 }
@@ -120,8 +120,8 @@ function generatePath(name: string, dir: string): [string, PathItemObject] {
 function processParts<T>(name: string, func: (s: string) => T, join: string) {
   return name
     .split("/")
-    .map((part) =>
-      partIsDynamic(part) ? func(part.substr(1, part.length - 2)) : part
+    .map(part =>
+      partIsDynamic(part) ? func(part.substr(1, part.length - 2)) : part,
     )
     .join(join);
 }
@@ -132,10 +132,10 @@ function partIsDynamic(name: string) {
 
 function generatePathItemObject(
   name: string,
-  endpoint: Endpoint
+  endpoint: Endpoint,
 ): PathItemObject {
-  const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
-    str.toLowerCase()
+  const methods = [...endpoint.methods || ["get"]].map(string =>
+    string.toLowerCase(),
   );
   const recased = toTitlecase(name);
 
@@ -170,11 +170,11 @@ function toTitlecase(part: string) {
   return _.startCase(part).replace(/ /g, "");
 }
 
-function buildContent(ref: string): ContentObject {
+function buildContent(reference: string): ContentObject {
   return {
     "application/json": {
       schema: {
-        $ref: "#/components/schemas/" + ref,
+        $ref: "#/components/schemas/" + reference,
       },
     },
   };
@@ -182,15 +182,15 @@ function buildContent(ref: string): ContentObject {
 
 async function loadTemplate(templateFile: string) {
   const filename = resolve(templateFile);
-  log.debug({ filename }, "Loading template");
+  log.debug({filename}, "Loading template");
 
   const builder = new OpenApiBuilder();
 
   _.merge(
     builder.rootDoc,
     parseDocument(
-      (await readFile(filename)).toString()
-    ).toJSON() as OpenAPIObject
+      (await readFile(filename)).toString(),
+    ).toJSON() as OpenAPIObject,
   );
 
   return builder;
@@ -201,17 +201,14 @@ async function getCommitHash(dir: string) {
     fs,
     filepath: dir,
   });
-  return (await git.resolveRef({ fs, ref: "HEAD", dir: gitdir })).substring(
-    0,
-    7
-  );
+  return (await git.resolveRef({fs, ref: "HEAD", dir: gitdir})).slice(0, 7);
 }
 
 const pair = flags.build({
   parse(input, _context): [string, string] {
     const idx = input.indexOf("=");
-    const key = input.substring(0, idx);
-    const value = input.substring(idx + 1);
+    const key = input.slice(0, Math.max(0, idx));
+    const value = input.slice(Math.max(0, idx + 1));
     return [key, value];
   },
 });
@@ -225,9 +222,9 @@ class Generate extends Command {
 
   static flags = {
     // add --version flag to show CLI version
-    debug: flags.boolean({ char: "d" }),
-    help: flags.help({ char: "h" }),
-    outputFile: flags.string({ char: "o" }),
+    debug: flags.boolean({char: "d"}),
+    help: flags.help({char: "h"}),
+    outputFile: flags.string({char: "o"}),
     inputFile: flags.string({
       char: "i",
       description: "Defaults to [directory]/api/openapi.yaml",
@@ -254,23 +251,23 @@ class Generate extends Command {
     }),
   };
 
-  static args = [{ name: "directory", required: true }];
+  static args = [{name: "directory", required: true}];
 
   async run() {
-    const { args, flags } = this.parse(Generate);
+    const {args, flags} = this.parse(Generate);
 
     log.level = flags.debug ? "debug" : "info";
 
     // These will only apply for this process and its children.
     for (const [key, value] of flags.envVar || []) {
-      log.debug({ key, value }, "Setting env var");
+      log.debug({key, value}, "Setting env var");
       process.env[key] = value;
     }
 
     const result = await generateOpenapi(
       flags.inputFile || args.directory + "/api/openapi.yaml",
       args.directory,
-      flags
+      flags,
     );
     await writeOut(result, flags);
   }
