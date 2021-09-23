@@ -12,7 +12,5 @@ repos:
         types: [file]
         additional_dependencies:
           - eslint@7.32.0
-          - eslint-config-google@0.7.1
-          - eslint-loader@1.6.1
-          - eslint-plugin-react@6.10.3
-          - babel-eslint@6.1.2
+          - "eslint-config-oclif@^3.1"
+          - "eslint-config-oclif-typescript@^1.0"
