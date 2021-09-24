@@ -68,7 +68,7 @@ async function generateOpenapi(
 
   for (const filename of paths.sort()) {
     log.debug({ filename }, "Loading file");
-    let name = filename.substring(0, filename.lastIndexOf("."));
+    const name = filename.substring(0, filename.lastIndexOf("."));
     if (filename.endsWith(".ts")) {
       doc.addPath(...generatePath(name, dir));
     }
