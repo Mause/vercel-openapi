@@ -156,6 +156,7 @@ function generatePathItemObject(
       if (!endpoint.requestShape?.length) {
         throw new Error(`Missing requestShape for ${name} for ${method}`);
       }
+
       op.requestBody = {
         content: buildContent(endpoint.requestShape),
         required: true,

@@ -21,6 +21,7 @@ function validateReferences(operation: any, result: OpenApiBuilder["rootDoc"]) {
         throw new Error(`Couldn't find ${operation.$ref}`);
       }
     }
+
     for (const sub of Object.values(operation)) {
       validateReferences(sub, result);
     }
