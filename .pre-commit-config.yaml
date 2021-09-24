@@ -11,7 +11,6 @@ repos:
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
         types: [file]
         additional_dependencies:
-          - '@typescript-eslint/eslint-plugin@4'
-          - '@typescript-eslint/parser@4'
-          - 'typescript@4'
-          
+          - "@typescript-eslint/eslint-plugin@4"
+          - "@typescript-eslint/parser@4"
+          - "typescript@4"
