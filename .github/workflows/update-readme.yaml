@@ -14,7 +14,8 @@ jobs:
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: 14
-      - run: yarn
+          cache: yarn
+      - run: yarn --frozen
       - run: npm install prettier -g
       - name: Update readme
         uses: technote-space/create-pr-action@v2
