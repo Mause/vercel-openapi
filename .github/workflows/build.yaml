@@ -1,4 +1,7 @@
-on: [pull_request_target]
+on: push
+permissions:
+  checks: write
+  issues: write
 
 name: Build
 
@@ -13,6 +16,6 @@ jobs:
           cache: yarn
       - run: yarn --frozen
       - name: TypeScript Error Reporter
-        uses: gozala/typescript-error-reporter-action@v1.0.7
+        uses: spin-org/typescript-error-reporter-action@v1.0.11
       - run: yarn build
       - run: yarn test
