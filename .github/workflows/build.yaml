@@ -10,7 +10,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
       - run: yarn --frozen
-      - name: TypeScript Error Reporter
-        uses: spin-org/typescript-error-reporter-action@v1.0.11
+#       - name: TypeScript Error Reporter
+#         uses: spin-org/typescript-error-reporter-action@v1.0.11
       - run: yarn build
       - run: yarn test
