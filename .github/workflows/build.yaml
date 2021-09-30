@@ -1,4 +1,7 @@
-on: [pull_request_target]
+on: push
+permissions:
+  checks: write
+  issues: write
 
 name: Build
 
