@@ -20,7 +20,7 @@
     "glob": "^7.2.0",
     "isomorphic-git": "^1.10.1",
     "openapi3-ts": "^2.0.1",
-    "pino": "^6.13.3",
+    "pino": "^7.0.0",
     "pino-pretty": "^7.0.1",
     "ts-node": "^10",
     "tslib": "^2",
