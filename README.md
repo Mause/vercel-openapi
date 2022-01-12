@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.7-0 linux-x64 node-v14.18.1
+vercel-openapi/0.1.8 linux-x64 node-v16.8.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -54,7 +54,7 @@ OPTIONS
       Environment variables to have in scope for loading the endpoints.
 
   -h, --help
-      show CLI help
+      Show CLI help.
 
   -i, --inputFile=inputFile
       Defaults to [directory]/api/openapi.yaml
@@ -62,9 +62,9 @@ OPTIONS
   -m, --moduleSystem=(CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None)
       Sets the module system for loading the endpoints
 
-             If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
-             vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
-             variable before the cli starts.
+      If you need more flexibility, you can set the TS_NODE_COMPILER_OPTIONS environment variable before invoking
+      vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
+      variable before the cli starts.
 
   -o, --outputFile=outputFile
 
@@ -77,20 +77,20 @@ EXAMPLE
 
 ## `vercel-openapi help [COMMAND]`
 
-display help for vercel-openapi
+Display help for vercel-openapi.
 
 ```
 USAGE
   $ vercel-openapi help [COMMAND]
 
 ARGUMENTS
-  COMMAND  command to show help for
+  COMMAND  Command to show help for.
 
 OPTIONS
-  --all  see all commands in CLI
+  -n, --nested-commands  Include all nested commands in the output.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
 
 ## `vercel-openapi scaffold`
 
