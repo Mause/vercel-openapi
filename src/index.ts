@@ -1,14 +1,14 @@
-import { writeFile } from "fs/promises";
+import {writeFile} from "fs/promises";
 import "./commands/generate";
 import "./commands/scaffold";
-import { OpenAPIObject } from "openapi3-ts";
-import { stringify } from "yaml";
+import {OpenAPIObject} from "openapi3-ts";
+import {stringify} from "yaml";
 
-export { run } from "@oclif/command";
+export {run} from "@oclif/command";
 
 export async function writeOut(
   result: OpenAPIObject,
-  flags: { outputFile: string | undefined }
+  flags: { outputFile: string | undefined },
 ) {
   const output = stringify(result, undefined, {
     indent: 2,

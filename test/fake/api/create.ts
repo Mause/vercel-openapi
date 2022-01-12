@@ -1,11 +1,12 @@
-import { IsString } from "class-validator";
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import {IsString} from "class-validator";
+import {VercelRequest, VercelResponse} from "@vercel/node";
 
 export const methods = new Set(["POST", "GET"]);
 
 class PostRequest {
   @IsString()
   name: string;
+
   constructor(name: string) {
     this.name = name;
   }
@@ -24,4 +25,4 @@ export const requestShape = PostRequest.name;
 export const responseShape = PostResponse.name;
 export const tags = ["create"];
 
-export default (_res: VercelRequest, _req: VercelResponse) => {};
+export default (_res: VercelRequest, _request: VercelResponse) => {};

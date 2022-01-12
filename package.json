@@ -69,7 +69,7 @@
   "repository": "Mause/vercel-openapi",
   "scripts": {
     "build": "tsc --noemit",
-    "posttest": "echo 0 || eslint . --ext .ts --config .eslintrc",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "postpack": "rimraf oclif.manifest.json",
     "test": "mocha -r ts-node/register 'test/**/*.ts'",
