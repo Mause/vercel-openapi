@@ -19,7 +19,7 @@ import { writeOut } from "..";
 import _ from "lodash";
 import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
-import Parser from "@oclif/parser";
+import { Parser } from "@oclif/core";
 
 const log = pino({ prettyPrint: true });
 
