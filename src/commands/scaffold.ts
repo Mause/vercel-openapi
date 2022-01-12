@@ -2,7 +2,7 @@ import { Command, Flags } from "@oclif/core";
 import { OpenApiBuilder } from "openapi3-ts";
 import { writeOut } from "..";
 
-class Scaffold extends Command {
+export default class Scaffold extends Command {
   static description = "Generates a scaffolded openapi.yaml";
 
   static examples = [
@@ -26,5 +26,3 @@ class Scaffold extends Command {
     await writeOut(builder, flags);
   }
 }
-
-export = Scaffold;

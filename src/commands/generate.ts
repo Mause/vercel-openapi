@@ -19,7 +19,6 @@ import { writeOut } from "..";
 import _ from "lodash";
 import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
-import { Parser } from "@oclif/core";
 import { OutputFlags } from "@oclif/core/lib/interfaces/parser";
 
 const log = pino({ prettyPrint: true });
@@ -217,7 +216,7 @@ const pair = Flags.build({
   },
 });
 
-class Generate extends Command {
+export default class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
   static examples = [
@@ -276,5 +275,3 @@ class Generate extends Command {
     await writeOut(result, flags);
   }
 }
-
-export = Generate;
