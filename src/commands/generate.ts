@@ -21,7 +21,14 @@ import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
 import { OutputFlags } from "@oclif/core/lib/interfaces/parser";
 
-const log = pino({ prettyPrint: true });
+const log = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
 
 interface Endpoint {
   responseShape?: string;
