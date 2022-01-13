@@ -62,7 +62,7 @@
       "@oclif/plugin-help",
       "@oclif/plugin-warn-if-update-available"
     ],
-    "commands": "./src/commands"
+    "commands": "./dist/commands"
   },
   "repository": "Mause/vercel-openapi",
   "scripts": {
