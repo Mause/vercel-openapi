@@ -20,7 +20,8 @@ jobs:
       - run: yarn --frozen
       - run: yarn build
       - run: yarn test
-      - name: sanity check
-        run: |
-          yarn run oclif manifest
-          yarn run oclif readme
+      - run: yarn pack
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vercel-openapi.tgz
+          path: vercel-openapi-*.tgz
