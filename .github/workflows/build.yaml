@@ -20,4 +20,7 @@ jobs:
       - run: yarn --frozen
       - run: yarn build
       - run: yarn test
-      - run: yarn run oclif-dev readme # sanity check
+      - name: sanity check
+        run: |
+          yarn run oclif manifest
+          yarn run oclif readme
