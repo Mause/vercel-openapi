@@ -123,11 +123,16 @@ components:
       properties:
         id:
           type: string
+        names:
+          type: array
+          items:
+            type: string
         name:
           type: string
       type: object
       required:
         - id
+        - names
         - name
     GetRequest:
       properties:

@@ -19,6 +19,8 @@ function validateRefs(operation: any, result: OpenApiBuilder["rootDoc"]) {
       const ref = parts[parts.length - 1];
       if (!result.components!.schemas![ref]) {
         throw new Error(`Couldn't find ${operation.$ref}`);
+      } else if (ref === "Array" || ref === "Object") {
+        throw new Error(`Invalid ref in ${operation.operationId}`);
       }
     }
     for (const sub of Object.values(operation)) {
