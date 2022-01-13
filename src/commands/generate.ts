@@ -54,8 +54,10 @@ async function generateOpenapi(
   dir: string,
   flags: OutputFlags<typeof Generate["flags"]>
 ) {
-  // register .ts extensions
-  register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
+  if (!(".ts" in require.extensions)) {
+    // register .ts extensions
+    register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
+  }
 
   dir = resolve(join(dir, "api"));
   log.info({ apiRoot: dir }, "Resolved api root");
