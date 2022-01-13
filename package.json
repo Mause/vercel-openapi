@@ -44,7 +44,7 @@
   },
   "files": [
     "/bin",
-    "/lib",
+    "/dist",
     "oclif.manifest.json"
   ],
   "homepage": "https://github.com/Mause/vercel-openapi",
@@ -70,7 +70,7 @@
     "posttest": "echo 0 || eslint . --ext .ts --config .eslintrc",
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "postpack": "rimraf oclif.manifest.json",
-    "test": "mocha -r ts-node/register 'test/**/*.ts'",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"
   },
   "types": "lib/index.d.ts",
