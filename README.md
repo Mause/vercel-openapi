@@ -19,8 +19,8 @@
 $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
-$ vercel-openapi (-v|--version|version)
-vercel-openapi/0.1.10 linux-x64 node-v16.8.0
+$ vercel-openapi (--version)
+vercel-openapi/0.1.11 linux-x64 node-v16.8.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -41,18 +41,19 @@ Generates openapi.yaml for vercel serverless functions
 
 ```
 USAGE
-  $ vercel-openapi generate DIRECTORY
+  $ vercel-openapi generate [DIRECTORY] [-d] [-h] [-o <value>] [-i <value>] [-e <value>] [--gitVersion] [-m
+    CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None]
 
-OPTIONS
+FLAGS
   -d, --debug
 
-  -e, --envVar=KEY=VALUE
+  -e, --envVar=KEY=VALUE...
       Environment variables to have in scope for loading the endpoints.
 
   -h, --help
       Show CLI help.
 
-  -i, --inputFile=inputFile
+  -i, --inputFile=<value>
       Defaults to [directory]/api/openapi.yaml
 
   -m, --moduleSystem=(CommonJS|AMD|System|UMD|ES6|ES2015|ES2020|ESNext|None)
@@ -62,14 +63,19 @@ OPTIONS
       vercel-openapi. Note that the --envVar flag won't work for this option, as ts-node parses the environment
       variable before the cli starts.
 
-  -o, --outputFile=outputFile
+  -o, --outputFile=<value>
 
   --gitVersion
       Append the short git hash to the end of the api version
 
-EXAMPLE
+DESCRIPTION
+  Generates openapi.yaml for vercel serverless functions
+
+EXAMPLES
   $ vercel-openapi generate . --output public/openapi.yaml
 ```
+
+_See code: [dist/commands/generate.js](https://github.com/Mause/vercel-openapi)_
 
 ## `vercel-openapi help [COMMAND]`
 
@@ -77,13 +83,16 @@ Display help for vercel-openapi.
 
 ```
 USAGE
-  $ vercel-openapi help [COMMAND]
+  $ vercel-openapi help [COMMAND] [-n]
 
 ARGUMENTS
   COMMAND  Command to show help for.
 
-OPTIONS
+FLAGS
   -n, --nested-commands  Include all nested commands in the output.
+
+DESCRIPTION
+  Display help for vercel-openapi.
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
@@ -94,14 +103,19 @@ Generates a scaffolded openapi.yaml
 
 ```
 USAGE
-  $ vercel-openapi scaffold
+  $ vercel-openapi scaffold -t <value> -v <value> [-o <value>]
 
-OPTIONS
-  -o, --outputFile=outputFile
-  -t, --title=title            (required)
-  -v, --version=version        (required)
+FLAGS
+  -o, --outputFile=<value>
+  -t, --title=<value>       (required)
+  -v, --version=<value>     (required)
 
-EXAMPLE
+DESCRIPTION
+  Generates a scaffolded openapi.yaml
+
+EXAMPLES
   $ vercel-openapi scaffold --title FakeAPI --version 1.0.42
 ```
+
+_See code: [dist/commands/scaffold.js](https://github.com/Mause/vercel-openapi)_
 <!-- commandsstop -->
