@@ -7,37 +7,33 @@
 [![NPM](https://nodei.co/npm/vercel-openapi.png)](https://nodei.co/npm/vercel-openapi/)
 
 <!-- toc -->
-
-- [vercel-openapi](#vercel-openapi)
-- [Usage](#usage)
-- [Commands](#commands)
+* [vercel-openapi](#vercel-openapi)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (--version)
-vercel-openapi/0.1.11 linux-x64 node-v16.8.0
+vercel-openapi/0.1.12-0 linux-x64 node-v16.8.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
-- [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
-- [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
+* [`vercel-openapi generate DIRECTORY`](#vercel-openapi-generate-directory)
+* [`vercel-openapi help [COMMAND]`](#vercel-openapi-help-command)
+* [`vercel-openapi scaffold`](#vercel-openapi-scaffold)
 
 ## `vercel-openapi generate DIRECTORY`
 
@@ -122,5 +118,4 @@ EXAMPLES
 ```
 
 _See code: [dist/commands/scaffold.js](https://github.com/Mause/vercel-openapi)_
-
 <!-- commandsstop -->
