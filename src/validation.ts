@@ -3,9 +3,7 @@ import { OpenApiBuilder } from "openapi3-ts";
 export function validateDoc(doc: OpenApiBuilder) {
   const result = doc.getSpec();
 
-  for (const operation of Object.values(result.paths)) {
-    validateRefs(operation, result);
-  }
+  validateRefs(result, result);
 }
 
 function validateRefs(operation: any, result: OpenApiBuilder["rootDoc"]) {
