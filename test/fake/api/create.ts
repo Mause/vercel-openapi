@@ -1,5 +1,6 @@
 import { IsString, ValidateNested } from "class-validator";
 import { VercelRequest, VercelResponse } from "@vercel/node";
+import { Type } from "class-transformer";
 
 export const methods = new Set(["POST", "GET"]);
 
@@ -13,14 +14,24 @@ class PostRequest {
 class PostResponse extends PostRequest {
   @IsString()
   id: string;
-  @ValidateNested({ each: true })
-  @IsString()
+  @IsString({ each: true })
   names: string[];
+  @ValidateNested({ each: true })
+  @Type(() => Item)
+  items: Item[];
 
-  constructor(id: string, name: string, names: string[]) {
+  constructor(id: string, name: string, names: string[], items: Item[]) {
     super(name);
     this.id = id;
     this.names = names;
+    this.items = items;
+  }
+}
+class Item {
+  @IsString()
+  id: string;
+  constructor(id: string) {
+    this.id = id;
   }
 }
 

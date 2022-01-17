@@ -124,16 +124,28 @@ components:
         id:
           type: string
         names:
-          type: array
           items:
             type: string
+          type: array
+        items:
+          items:
+            $ref: \\"#/components/schemas/Item\\"
+          type: array
         name:
           type: string
       type: object
       required:
         - id
         - names
+        - items
         - name
+    Item:
+      properties:
+        id:
+          type: string
+      type: object
+      required:
+        - id
     GetRequest:
       properties:
         name:
