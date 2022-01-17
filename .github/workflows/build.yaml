@@ -1,4 +1,10 @@
-on: push
+on:
+  push:
+  pull_request:
+    types: [opened]
+permissions:
+  checks: write
+  issues: write
 
 name: Build
 
@@ -8,9 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.5.1
+        with:
+          cache: yarn
       - run: yarn --frozen
-      - name: TypeScript Error Reporter
-        uses: gozala/typescript-error-reporter-action@v1.0.5
       - run: yarn build
       - run: yarn test
+      - run: yarn pack
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vercel-openapi.tgz
+          path: vercel-openapi-*.tgz

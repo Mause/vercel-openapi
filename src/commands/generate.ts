@@ -1,4 +1,4 @@
-import { Command, flags } from "@oclif/command";
+import { Command, Flags } from "@oclif/core";
 import git from "isomorphic-git";
 import { readFile } from "fs/promises";
 import fs from "fs";
@@ -19,9 +19,16 @@ import { writeOut } from "..";
 import _ from "lodash";
 import glob from "glob";
 const { defaultMetadataStorage } = require("class-transformer/cjs/storage");
-import Parser from "@oclif/parser";
+import { OutputFlags } from "@oclif/core/lib/interfaces/parser";
 
-const log = pino({ prettyPrint: true });
+const log = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
 
 export interface Endpoint {
   responseShape?: string;
@@ -45,16 +52,20 @@ enum ModuleSystem {
 async function generateOpenapi(
   templateFile: string,
   dir: string,
-  flags: Parser.OutputFlags<typeof Generate["flags"]>
+  flags: OutputFlags<typeof Generate["flags"]>
 ) {
-  // register .ts extensions
-  register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
+  if (!(".ts" in require.extensions)) {
+    // register .ts extensions
+    register({ cwd: dir, compilerOptions: { module: flags.moduleSystem } });
+  }
 
   dir = resolve(join(dir, "api"));
+  log.info({ apiRoot: dir }, "Resolved api root");
   const doc = await loadTemplate(templateFile);
 
   if (flags.gitVersion) {
     doc.rootDoc.info.version += "+" + (await getCommitHash(dir));
+    log.info(doc.rootDoc.info, "Appended git hash to version");
   }
 
   const paths: string[] = await new Promise((resolve, reject) => {
@@ -209,8 +220,8 @@ async function getCommitHash(dir: string) {
   );
 }
 
-const pair = flags.build({
-  parse(input, _context): [string, string] {
+const pair = Flags.build({
+  async parse(input, _context): Promise<[string, string]> {
     const idx = input.indexOf("=");
     const key = input.substring(0, idx);
     const value = input.substring(idx + 1);
@@ -218,7 +229,7 @@ const pair = flags.build({
   },
 });
 
-class Generate extends Command {
+export default class Generate extends Command {
   static description = "Generates openapi.yaml for vercel serverless functions";
 
   static examples = [
@@ -227,10 +238,10 @@ class Generate extends Command {
 
   static flags = {
     // add --version flag to show CLI version
-    debug: flags.boolean({ char: "d" }),
-    help: flags.help({ char: "h" }),
-    outputFile: flags.string({ char: "o" }),
-    inputFile: flags.string({
+    debug: Flags.boolean({ char: "d" }),
+    help: Flags.help({ char: "h" }),
+    outputFile: Flags.string({ char: "o" }),
+    inputFile: Flags.string({
       char: "i",
       description: "Defaults to [directory]/api/openapi.yaml",
     }),
@@ -241,8 +252,10 @@ class Generate extends Command {
       description:
         "Environment variables to have in scope for loading the endpoints.",
     }),
-    gitVersion: flags.boolean(),
-    moduleSystem: flags.enum<ModuleSystem>({
+    gitVersion: Flags.boolean({
+      description: "Append the short git hash to the end of the api version",
+    }),
+    moduleSystem: Flags.enum<ModuleSystem>({
       char: "m",
       description: `Sets the module system for loading the endpoints
       
@@ -257,7 +270,7 @@ class Generate extends Command {
   static args = [{ name: "directory", required: true }];
 
   async run() {
-    const { args, flags } = this.parse(Generate);
+    const { args, flags } = await this.parse(Generate);
 
     log.level = flags.debug ? "debug" : "info";
 
@@ -275,5 +288,3 @@ class Generate extends Command {
     await writeOut(result, flags);
   }
 }
-
-export default Generate;
