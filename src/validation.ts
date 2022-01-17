@@ -3,9 +3,7 @@ import { OpenApiBuilder } from "openapi3-ts";
 export function validateDoc(doc: OpenApiBuilder) {
   const result = doc.getSpec();
 
-  for (const operation of Object.values(result.paths)) {
-    validateRefs(operation, result);
-  }
+  validateRefs(result, result);
 }
 
 function validateRefs(operation: any, result: OpenApiBuilder["rootDoc"]) {
@@ -19,6 +17,8 @@ function validateRefs(operation: any, result: OpenApiBuilder["rootDoc"]) {
       const ref = parts[parts.length - 1];
       if (!result.components!.schemas![ref]) {
         throw new Error(`Couldn't find ${operation.$ref}`);
+      } else if (ref === "Array" || ref === "Object") {
+        throw new Error(`Invalid ref in ${operation.operationId}`);
       }
     }
     for (const sub of Object.values(operation)) {
