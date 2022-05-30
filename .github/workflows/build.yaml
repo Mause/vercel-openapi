@@ -21,7 +21,7 @@ jobs:
       - run: yarn build
       - run: yarn test
       - run: yarn pack
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: vercel-openapi.tgz
           path: vercel-openapi-*.tgz
