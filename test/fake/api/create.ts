@@ -37,6 +37,7 @@ class Item {
 }
 
 export const openapiMetadata: Endpoint = {
+  methods: ["post", "get"],
   requestShape: PostRequest.name,
   responseShape: PostResponse.name,
   tags: ["create"],

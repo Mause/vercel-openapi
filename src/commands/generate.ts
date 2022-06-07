@@ -34,7 +34,7 @@ export interface Endpoint {
   responseShape?: string;
   requestShape?: string;
   tags?: string[];
-  methods?: Set<keyof Pick<PathItemObject, "get">>;
+  methods?: ("post" | "get")[];
 }
 
 enum ModuleSystem {
