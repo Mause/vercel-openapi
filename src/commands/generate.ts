@@ -30,11 +30,11 @@ const log = pino({
   },
 });
 
-interface Endpoint {
+export interface Endpoint {
   responseShape?: string;
   requestShape?: string;
   tags?: string[];
-  methods?: Set<keyof Pick<PathItemObject, "get">>;
+  methods?: ("post" | "get")[];
 }
 
 enum ModuleSystem {
@@ -100,7 +100,11 @@ async function generateOpenapi(
 }
 
 function generatePath(name: string, dir: string): [string, PathItemObject] {
-  const endpoint = require(join(dir, name)) as Endpoint; // register models
+  const module = require(join(dir, name));
+  let endpoint = (
+    module.openapiMetadata ? module.openapiMetadata : module
+  ) as Endpoint; // register models
+
   if (!endpoint.responseShape) {
     throw new Error(`Missing responseShape for ${name}`);
   }

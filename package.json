@@ -82,7 +82,6 @@
     "@vercel/node": "*"
   },
   "lint-staged": {
-    "*.{ts,js}": "eslint --cache --fix",
     "*.{js,ts,css,md}": "prettier --write"
   }
 }

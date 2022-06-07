@@ -4,6 +4,7 @@ import "./commands/scaffold";
 import { OpenAPIObject } from "openapi3-ts";
 import { stringify } from "yaml";
 
+export { Endpoint } from "./commands/generate";
 export { run } from "@oclif/core";
 
 export async function writeOut(
