@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (--version)
-vercel-openapi/0.1.12 linux-x64 node-v16.8.0
+vercel-openapi/0.1.14 android-arm64 node-v16.15.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
@@ -99,7 +99,7 @@ DESCRIPTION
   Display help for vercel-openapi.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.12/src/commands/help.ts)_
 
 ## `vercel-openapi scaffold`
 
