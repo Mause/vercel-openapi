@@ -101,7 +101,7 @@ async function generateOpenapi(
 
 function generatePath(name: string, dir: string): [string, PathItemObject] {
   const module = require(join(dir, name));
-  let endpoint = (
+  const endpoint = (
     module.openapiMetadata ? module.openapiMetadata : module
   ) as Endpoint; // register models
 
