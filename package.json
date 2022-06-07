@@ -11,6 +11,7 @@
     "@oclif/plugin-help": "^5.1.12",
     "@oclif/plugin-warn-if-update-available": "^2.0.0",
     "@types/glob": "^7.1.4",
+    "@types/validator": "^13.7.3",
     "class-transformer": "^0.5.0",
     "class-validator": "^0.13.2",
     "class-validator-jsonschema": "^3.1.0",
