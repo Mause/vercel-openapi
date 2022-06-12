@@ -1650,10 +1650,10 @@ class-transformer@^0.5.0:
   resolved "https://registry.yarnpkg.com/class-transformer/-/class-transformer-0.5.1.tgz#24147d5dffd2a6cea930a3250a677addf96ab336"
   integrity sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==
 
-class-validator-jsonschema@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/class-validator-jsonschema/-/class-validator-jsonschema-3.1.0.tgz#95cafa347ddc9da49343639d3261f85d23b06d39"
-  integrity sha512-1If+ZK3ZKhJfA7QWi064RJ2oTadBqmBtVPRb4DyxIlWS2m2hc9kWHwoEfycOroVfTuANMZ4XOtp3JD27U5V95w==
+class-validator-jsonschema@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/class-validator-jsonschema/-/class-validator-jsonschema-3.1.1.tgz#5d2dd61428a2382f7d6571e8250b1aa7f9e0e8d3"
+  integrity sha512-xga/5rTDKaYysivdX6OWaVllAS2OGeXgRRaXRo5QAW+mSDOpbjrf5JhmdPvUKMEkGyQer0gCoferB3COl170Rg==
   dependencies:
     lodash.groupby "^4.6.0"
     lodash.merge "^4.6.2"
