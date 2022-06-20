@@ -22,7 +22,7 @@ $ npm install -g vercel-openapi
 $ vercel-openapi COMMAND
 running command...
 $ vercel-openapi (--version)
-vercel-openapi/0.1.15 android-arm64 node-v16.15.0
+vercel-openapi/0.1.16 android-arm64 node-v16.15.0
 $ vercel-openapi --help [COMMAND]
 USAGE
   $ vercel-openapi COMMAND
