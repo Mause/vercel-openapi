@@ -1,6 +1,6 @@
 {
   "name": "vercel-openapi",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "author": "Elliana May @Mause",
   "bin": {
     "vercel-openapi": "./bin/run"
@@ -9,38 +9,38 @@
   "dependencies": {
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5.1.12",
-    "@oclif/plugin-warn-if-update-available": "^2.0.0",
-    "@types/glob": "^7.1.4",
+    "@oclif/plugin-warn-if-update-available": "^2.0.4",
+    "@types/glob": "^7.2.0",
     "@types/validator": "^13.7.3",
     "class-transformer": "^0.5.0",
     "class-validator": "^0.13.2",
-    "class-validator-jsonschema": "^3.1.0",
+    "class-validator-jsonschema": "^3.1.1",
     "glob": "^8.0.0",
-    "isomorphic-git": "^1.17.3",
-    "openapi3-ts": "^2.0.1",
+    "isomorphic-git": "^1.18.3",
+    "openapi3-ts": "^2.0.2",
     "pino": "^8.0.0",
     "pino-pretty": "^8.0.0",
     "ts-node": "^10",
     "tslib": "^2",
-    "typescript": "^4.4",
+    "typescript": "^4.7",
     "yaml": "^2.0.0-8"
   },
   "devDependencies": {
     "@oclif/test": "^2.1.0",
     "@types/chai": "^4",
     "@types/mocha": "^9",
-    "@types/node": "^16",
+    "@types/node": "^17",
     "@vercel/node": "*",
     "chai": "^4",
-    "eslint": "^8.0.0",
+    "eslint": "^8.18.0",
     "eslint-config-oclif": "^4.0",
     "eslint-config-oclif-typescript": "^1.0",
     "husky": ">=6",
-    "lint-staged": ">=10",
+    "lint-staged": ">=13",
     "mocha": "^10.0.0",
     "mocha-chai-jest-snapshot": "^1.1.3",
     "oclif": "^3.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "shx": "^0.3.4"
   },
   "engines": {
@@ -79,7 +79,7 @@
   },
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@types/node": "^16",
+    "@types/node": "^17",
     "@vercel/node": "*"
   },
   "lint-staged": {
