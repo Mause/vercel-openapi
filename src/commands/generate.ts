@@ -149,7 +149,7 @@ function generatePathItemObject(
 ): PathItemObject {
   const methods = Array.from(endpoint.methods || ["get"]).map((str) =>
     str.toLowerCase()
-  );
+  ) as (keyof PathItemObject)[];
   const recased = toTitlecase(name);
 
   const def: PathItemObject = {};
