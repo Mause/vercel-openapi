@@ -19,7 +19,7 @@
     "isomorphic-git": "^1.18.3",
     "openapi3-ts": "^2.0.2",
     "pino": "^8.1.0",
-    "pino-pretty": "^9.0.0",
+    "pino-pretty": "^9.1.1",
     "ts-node": "^10",
     "tslib": "^2",
     "typescript": "^4.7",
