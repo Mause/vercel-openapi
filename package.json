@@ -29,7 +29,7 @@
     "@oclif/test": "^2.1.0",
     "@types/chai": "^4",
     "@types/mocha": "^9",
-    "@types/node": "^17",
+    "@types/node": "^18.0.0",
     "@vercel/node": "*",
     "chai": "^4",
     "eslint": "^8.18.0",
@@ -79,7 +79,7 @@
   },
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@types/node": "^17",
+    "@types/node": "^18.0.0",
     "@vercel/node": "*"
   },
   "lint-staged": {
