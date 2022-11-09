@@ -22,7 +22,7 @@
     "pino-pretty": "^9.1.1",
     "ts-node": "^10",
     "tslib": "^2",
-    "typescript": "^4.7",
+    "typescript": "^4.8",
     "yaml": "^2.0.0-8"
   },
   "devDependencies": {
