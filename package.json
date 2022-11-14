@@ -8,7 +8,7 @@
   "bugs": "https://github.com/Mause/vercel-openapi/issues",
   "dependencies": {
     "@oclif/core": "^1",
-    "@oclif/plugin-help": "^5.1.12",
+    "@oclif/plugin-help": "^5.1.19",
     "@oclif/plugin-warn-if-update-available": "^2.0.4",
     "@types/glob": "^8.0.0",
     "@types/validator": "^13.7.10",
