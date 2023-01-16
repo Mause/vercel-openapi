@@ -894,13 +894,13 @@
     supports-color "^8.1.1"
     tslib "^2"
 
-"@oclif/core@^1", "@oclif/core@^1.20.0", "@oclif/core@^1.20.2", "@oclif/core@^1.20.3":
-  version "1.20.4"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.20.4.tgz#7378b52e1f1b502e383ffb07f95dffc9fd8588ff"
-  integrity sha512-giug32M4YhSYNYKQwE1L57/+k5gp1+Bq3/0vKNQmzAY1tizFGhvBJc6GIRZasHjU+xtZLutQvrVrJo7chX3hxg==
+"@oclif/core@^1", "@oclif/core@^1.20.0", "@oclif/core@^1.20.2", "@oclif/core@^1.20.3", "@oclif/core@^1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.24.0.tgz#e94e2f3a1259ebb3cc867d04b12c5bfc31c21f50"
+  integrity sha512-J41suyV4fLfLcRRySZdtgFYSjIlpYqD90SY01Fm4+ZJUMcfDh/eQAD4sogyYOsIT0bfEzYOyYCjmfHmgcoX5aA==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
-    "@oclif/screen" "^3.0.3"
+    "@oclif/screen" "^3.0.4"
     ansi-escapes "^4.3.2"
     ansi-styles "^4.3.0"
     cardinal "^2.1.1"
@@ -950,12 +950,12 @@
     fast-levenshtein "^3.0.0"
     lodash "^4.17.21"
 
-"@oclif/plugin-warn-if-update-available@^2.0.4", "@oclif/plugin-warn-if-update-available@^2.0.6":
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-2.0.13.tgz#4a3d39cbe200dc91d6bcf54f6845b8f2c457e5a5"
-  integrity sha512-mynTZhUr0Vcud27SoK6Wph9U4Umuxra0UD0tChn/uwN/+qXq9ckr+UazxvwNOdr14RbJyjKz0luU7cCECdjJxw==
+"@oclif/plugin-warn-if-update-available@^2.0.19", "@oclif/plugin-warn-if-update-available@^2.0.6":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-2.0.19.tgz#d4a03fac8e46d5f0d56c2acaecb8f4f28cb413ee"
+  integrity sha512-1zL98NtCgfYGhePncFEVRcJsWuvnxuhJfLS4QXIWYeWq3L8l7943edU9fKP21ct50FKHuyv90fsVyIB87GOpmQ==
   dependencies:
-    "@oclif/core" "^1.20.3"
+    "@oclif/core" "^1.24.0"
     chalk "^4.1.0"
     debug "^4.1.0"
     fs-extra "^9.0.1"
@@ -963,10 +963,10 @@
     lodash "^4.17.21"
     semver "^7.3.8"
 
-"@oclif/screen@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-3.0.3.tgz#e679ad10535e31d333f809f7a71335cc9aef1e55"
-  integrity sha512-KX8gMYA9ujBPOd1HFsV9e0iEx7Uoj8AG/3YsW4TtWQTg4lJvr82qNm7o/cFQfYRIt+jw7Ew/4oL4A22zOT+IRA==
+"@oclif/screen@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-3.0.4.tgz#663db0ecaf23f3184e7f01886ed578060e4a7f1c"
+  integrity sha512-IMsTN1dXEXaOSre27j/ywGbBjrzx0FNd1XmuhCWCB9NTPrhWI1Ifbz+YLSEcstfQfocYsrbrIessxXb2oon4lA==
 
 "@oclif/test@^2.2.10":
   version "2.2.10"
