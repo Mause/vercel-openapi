@@ -77,7 +77,7 @@ async function generateOpenapi(
 
   for (const filename of paths.sort()) {
     log.debug({ filename }, "Loading file");
-    let name = filename.substring(0, filename.lastIndexOf("."));
+    const name = filename.substring(0, filename.lastIndexOf("."));
     if (filename.endsWith(".ts")) {
       doc.addPath(...generatePath(name, dir));
     }
@@ -101,7 +101,7 @@ async function generateOpenapi(
 
 function generatePath(name: string, dir: string): [string, PathItemObject] {
   const module = require(join(dir, name));
-  let endpoint = (
+  const endpoint = (
     module.openapiMetadata ? module.openapiMetadata : module
   ) as Endpoint; // register models
 
