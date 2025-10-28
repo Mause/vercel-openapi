@@ -41,7 +41,7 @@
     "mocha-chai-jest-snapshot": "^1.1.4",
     "oclif": "^3.2.25",
     "prettier": "^2.7.1",
-    "shx": "^0.3.4"
+    "shx": "^0.4.0"
   },
   "engines": {
     "node": ">=8.0.0"
