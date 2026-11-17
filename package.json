@@ -40,7 +40,7 @@
     "mocha": "^10.1.0",
     "mocha-chai-jest-snapshot": "^1.1.4",
     "oclif": "^3.2.25",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.0",
     "shx": "^0.3.4"
   },
   "engines": {
